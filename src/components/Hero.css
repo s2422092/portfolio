@@ -1,103 +1,212 @@
+/* ════════════════════════════════
+   Hero — Notion style
+════════════════════════════════ */
+
 .hero {
-  min-height: 100vh;
+  position: relative;
+  padding-bottom: 64px;
+}
+
+/* ── カバーエリア ── */
+.hero-cover {
+  width: 100%;
+  height: 340px;
+  background: linear-gradient(
+    135deg,
+    #1a2744 0%,
+    #0f2040 40%,
+    #0d1f3c 60%,
+    #0a1628 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .hero-cover { height: 220px; }
+}
+
+.cover-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.cover-img.loaded {
+  opacity: 1;
+}
+
+.cover-overlay {
+  position: absolute;
+  inset: 0;
+  /* 写真なし: 装飾グラデのみ */
+  background:
+    radial-gradient(ellipse 70% 80% at 20% 50%, rgba(37, 99, 235, 0.3), transparent),
+    radial-gradient(ellipse 50% 60% at 80% 20%, rgba(6, 182, 212, 0.2), transparent);
+  transition: background 0.8s ease;
+}
+
+/* 写真あり: 下側を暗くしてプロフィールとなじませる */
+.cover-overlay.with-photo {
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 20, 40, 0.1) 0%,
+    rgba(10, 20, 40, 0.5) 70%,
+    rgba(15, 23, 42, 0.9) 100%
+  );
+}
+
+.cover-placeholder {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.2);
+  font-size: 0.78rem;
+  white-space: nowrap;
+  pointer-events: none;
+  font-family: monospace;
+}
+
+/* ── プロフィールラッパー ── */
+.hero-profile-wrap {
+  background: var(--bg);
+}
+
+.hero-profile {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  padding-top: 0;
+  /* アバターがカバーに食い込む分だけ上にずらす */
+  margin-top: -56px;
+}
+
+/* ── アバター ── */
+.avatar-wrap {
+  flex-shrink: 0;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  border: 4px solid var(--bg);
+  overflow: hidden;
+  background: var(--bg-card);
+  position: relative;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  position: absolute;
+  inset: 0;
+}
+
+.avatar-img.loaded {
+  opacity: 1;
+}
+
+.avatar-fallback {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  overflow: hidden;
-  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
 }
 
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37, 99, 235, 0.2), transparent),
-              radial-gradient(ellipse 60% 40% at 80% 80%, rgba(6, 182, 212, 0.1), transparent);
-  pointer-events: none;
+.avatar-fallback.hidden {
+  display: none;
 }
 
-.hero-content {
-  position: relative;
-  z-index: 1;
-  padding-top: 80px;
+/* ── テキストブロック ── */
+.hero-text {
+  flex: 1;
+  padding-top: 64px; /* アバターより下から始める */
 }
 
-.hero-greeting {
-  color: var(--text-muted);
-  font-size: 1rem;
-  margin-bottom: 12px;
-  letter-spacing: 0.05em;
+.hero-name-row {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
 }
 
 .hero-name {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 700;
-  background: linear-gradient(135deg, #fff 30%, var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text);
   line-height: 1.2;
-  margin-bottom: 4px;
 }
 
 .hero-name-en {
-  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-size: 1rem;
   color: var(--text-muted);
-  font-weight: 300;
-  letter-spacing: 0.1em;
-  margin-bottom: 24px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
 }
 
 .hero-tagline {
-  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-size: 1rem;
   color: var(--accent);
   font-weight: 500;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 
-.hero-desc {
+.hero-univ {
+  font-size: 0.88rem;
   color: var(--text-muted);
-  font-size: 0.95rem;
-  margin-bottom: 32px;
+  margin-bottom: 20px;
 }
 
 .hero-badges {
   display: flex;
-  gap: 10px;
-  justify-content: center;
+  gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
 }
 
 .badge {
   background: rgba(37, 99, 235, 0.15);
-  border: 1px solid rgba(37, 99, 235, 0.3);
+  border: 1px solid rgba(37, 99, 235, 0.35);
   color: #93c5fd;
-  padding: 6px 16px;
+  padding: 4px 14px;
   border-radius: 20px;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 500;
 }
 
 .hero-cta {
   display: flex;
-  gap: 16px;
-  justify-content: center;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
 .btn-primary {
   background: linear-gradient(135deg, var(--primary), var(--accent));
   color: #fff;
-  padding: 12px 32px;
+  padding: 10px 28px;
   border-radius: 8px;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   text-decoration: none;
   transition: opacity 0.2s, transform 0.2s;
 }
 
 .btn-primary:hover {
-  opacity: 0.9;
+  opacity: 0.88;
   transform: translateY(-2px);
   text-decoration: none;
 }
@@ -105,11 +214,11 @@
 .btn-outline {
   background: transparent;
   color: var(--text);
-  padding: 12px 32px;
+  padding: 10px 28px;
   border-radius: 8px;
   border: 1px solid var(--border);
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   text-decoration: none;
   transition: border-color 0.2s, transform 0.2s;
 }
@@ -120,11 +229,11 @@
   text-decoration: none;
 }
 
+/* ── スクロール矢印 ── */
 .hero-scroll {
-  position: absolute;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
 }
 
 .hero-scroll span {
@@ -150,6 +259,24 @@
 }
 
 @keyframes scroll-dot {
-  0% { opacity: 1; top: 4px; }
-  100% { opacity: 0; top: 18px; }
+  0%  { opacity: 1; top: 4px; }
+  100%{ opacity: 0; top: 18px; }
+}
+
+/* ── モバイル ── */
+@media (max-width: 640px) {
+  .hero-profile {
+    flex-direction: column;
+    gap: 0;
+    margin-top: -40px;
+  }
+
+  .avatar-wrap {
+    width: 84px;
+    height: 84px;
+  }
+
+  .hero-text {
+    padding-top: 16px;
+  }
 }
