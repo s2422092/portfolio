@@ -1,107 +1,242 @@
+/* ════════════════════════════════
+   Timeline — horizontal slider
+════════════════════════════════ */
+
 .timeline-section {
-  background: linear-gradient(180deg, rgba(30, 41, 59, 0.3) 0%, var(--bg) 100%);
+  padding: 80px 0 60px;
+  overflow: hidden;
 }
 
-.timeline-intro {
-  color: var(--text-muted);
-  margin-bottom: 48px;
-}
-
-.year-block {
-  margin-bottom: 48px;
-}
-
-.year-label {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 24px;
-  padding-left: 28px;
-  position: relative;
-}
-
-.year-label::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 12px;
-  height: 12px;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  border-radius: 50%;
-}
-
-.timeline-items {
-  padding-left: 0;
-}
-
-.timeline-item {
+/* ── ヘッダー ── */
+.tl-header {
   display: flex;
-  gap: 20px;
-  margin-bottom: 16px;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 40px;
 }
 
-.timeline-line {
+.tl-intro {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+/* 矢印ナビ */
+.tl-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.tl-nav-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+}
+
+.tl-nav-btn:hover {
+  border-color: var(--accent);
+  background: rgba(6, 182, 212, 0.1);
+  transform: scale(1.08);
+}
+
+.tl-counter {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  min-width: 48px;
+  text-align: center;
+}
+
+/* ── スライドトラック ── */
+.tl-track {
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  /* スクロールバー非表示 */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 12px 0 20px;
+}
+
+.tl-track::-webkit-scrollbar {
+  display: none;
+}
+
+.tl-track-inner {
+  display: flex;
+  gap: 16px;
+  padding-left: calc((100vw - min(1100px, 100vw - 48px)) / 2 + 24px);
+}
+
+/* ── カード共通 ── */
+.tl-card {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.tl-card.active {
+  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.25), 0 8px 32px rgba(0,0,0,0.3);
+  transform: translateY(-4px);
+}
+
+.tl-card:not(.active):hover {
+  border-color: var(--text-muted);
+  transform: translateY(-2px);
+}
+
+/* ── 年ラベルカード ── */
+.tl-year-card {
+  width: 120px;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #1a2a4a, #0f1e36);
+}
+
+.tl-year-label {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  letter-spacing: 0.05em;
+}
+
+/* ── イベントカード ── */
+.tl-item-card {
+  width: 280px;
+  min-height: 220px;
+  padding: 22px 22px 48px;
+  background: var(--bg-card);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  flex-shrink: 0;
-  padding-top: 20px;
+  gap: 10px;
 }
 
-.timeline-dot {
+.tl-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tl-year-tag {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+
+.tl-month {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+}
+
+.tl-title {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.tl-desc {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  flex: 1;
+}
+
+/* カード右下の通し番号 */
+.tl-card-num {
+  position: absolute;
+  bottom: 14px;
+  right: 18px;
+  font-size: 2rem;
+  font-weight: 800;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* ── スペーサー（末尾の余白） ── */
+.tl-spacer {
+  flex-shrink: 0;
+  width: calc((100vw - min(1100px, 100vw - 48px)) / 2 + 24px);
+}
+
+/* ── ドットナビ ── */
+.tl-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.tl-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, transform 0.2s, width 0.2s;
+}
+
+.tl-dot.dot-year {
+  background: rgba(37, 99, 235, 0.4);
   width: 10px;
   height: 10px;
-  border-radius: 50%;
+}
+
+.tl-dot.active {
   background: var(--accent);
-  border: 2px solid var(--bg);
-  box-shadow: 0 0 0 2px var(--accent);
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1;
+  transform: scale(1.3);
+  width: 20px;
+  border-radius: 3px;
 }
 
-.timeline-line::after {
-  content: '';
-  flex: 1;
-  width: 1px;
-  background: var(--border);
-  margin-top: 8px;
-  min-height: 20px;
-}
-
-.timeline-body {
-  flex: 1;
-  padding: 16px 20px;
-}
-
-.timeline-month {
-  font-size: 0.78rem;
-  color: var(--accent);
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  display: block;
-  margin-bottom: 4px;
-}
-
-.timeline-event {
-  font-size: 0.98rem;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.timeline-desc {
-  color: var(--text-muted);
-  font-size: 0.87rem;
-  line-height: 1.6;
-}
-
+/* ── モバイル ── */
 @media (max-width: 640px) {
-  .timeline-item {
-    gap: 12px;
+  .tl-item-card {
+    width: calc(100vw - 96px);
   }
-  .timeline-body {
-    padding: 14px 16px;
+  .tl-year-card {
+    width: 88px;
+    min-height: 180px;
+  }
+  .tl-year-label {
+    font-size: 1.5rem;
+  }
+  .tl-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 }
