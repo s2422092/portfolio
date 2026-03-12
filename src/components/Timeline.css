@@ -1,10 +1,21 @@
 /* ════════════════════════════════
-   Timeline — horizontal slider
+   Timeline  —  horizontal graph
+   左 = 過去(2024)  →  右 = 最新(2026)
 ════════════════════════════════ */
 
+/* ── カテゴリカラー ── */
 .timeline-section {
-  padding: 80px 0 60px;
-  overflow: hidden;
+  --c-dev:   #818cf8;
+  --c-trip:  #34d399;
+  --c-org:   #fbbf24;
+  --c-event: #22d3ee;
+
+  /* グラフ寸法 */
+  --axis-top:  160px;   /* キャンバス上端から軸までの距離 */
+  --lbl-space: 130px;   /* ラベルエリアの高さ（上下それぞれ） */
+  --canvas-h:  calc(var(--axis-top) + var(--lbl-space) + 32px);
+
+  padding: 80px 0 48px;
 }
 
 /* ── ヘッダー ── */
@@ -13,230 +24,316 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
 }
 
-.tl-intro {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  margin-top: 4px;
-}
-
-/* 矢印ナビ */
-.tl-nav {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-.tl-nav-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: border-color 0.2s, background 0.2s, transform 0.15s;
-}
-
-.tl-nav-btn:hover {
-  border-color: var(--accent);
-  background: rgba(6, 182, 212, 0.1);
-  transform: scale(1.08);
-}
-
-.tl-counter {
+.tl-sub {
   font-size: 0.82rem;
   color: var(--text-muted);
-  min-width: 48px;
-  text-align: center;
-}
-
-/* ── スライドトラック ── */
-.tl-track {
-  overflow-x: auto;
-  overflow-y: visible;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  /* スクロールバー非表示 */
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  padding: 12px 0 20px;
-}
-
-.tl-track::-webkit-scrollbar {
-  display: none;
-}
-
-.tl-track-inner {
-  display: flex;
-  gap: 16px;
-  padding-left: calc((100vw - min(1100px, 100vw - 48px)) / 2 + 24px);
-}
-
-/* ── カード共通 ── */
-.tl-card {
-  scroll-snap-align: start;
-  flex-shrink: 0;
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
-  cursor: pointer;
-  user-select: none;
-  position: relative;
-  overflow: hidden;
-}
-
-.tl-card.active {
-  border-color: rgba(6, 182, 212, 0.5);
-  box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.25), 0 8px 32px rgba(0,0,0,0.3);
-  transform: translateY(-4px);
-}
-
-.tl-card:not(.active):hover {
-  border-color: var(--text-muted);
-  transform: translateY(-2px);
-}
-
-/* ── 年ラベルカード ── */
-.tl-year-card {
-  width: 120px;
-  min-height: 220px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(145deg, #1a2a4a, #0f1e36);
-}
-
-.tl-year-label {
-  font-size: 2rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  letter-spacing: 0.05em;
-}
-
-/* ── イベントカード ── */
-.tl-item-card {
-  width: 280px;
-  min-height: 220px;
-  padding: 22px 22px 48px;
-  background: var(--bg-card);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.tl-card-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.tl-year-tag {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 2px 8px;
-}
-
-.tl-month {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--accent);
+  margin-top: 6px;
   letter-spacing: 0.04em;
 }
 
-.tl-title {
-  font-size: 1rem;
+/* 凡例 */
+.tl-legend {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tl-leg {
+  font-size: 0.72rem;
   font-weight: 600;
-  line-height: 1.4;
+  padding: 3px 11px;
+  border-radius: 20px;
+  border: 1px solid currentColor;
+}
+.tl-leg--dev   { color: var(--c-dev);   background: color-mix(in srgb, var(--c-dev) 12%, transparent); }
+.tl-leg--trip  { color: var(--c-trip);  background: color-mix(in srgb, var(--c-trip) 12%, transparent); }
+.tl-leg--org   { color: var(--c-org);   background: color-mix(in srgb, var(--c-org) 12%, transparent); }
+.tl-leg--event { color: var(--c-event); background: color-mix(in srgb, var(--c-event) 12%, transparent); }
+
+/* ── 詳細パネル ── */
+.tl-panel {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 24px;
+  margin-bottom: 28px;
+  min-height: 76px;
+  transition: border-color 0.3s;
+}
+
+.tl-panel__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tl-panel__dot--dev   { background: var(--c-dev); }
+.tl-panel__dot--trip  { background: var(--c-trip); }
+.tl-panel__dot--org   { background: var(--c-org); }
+.tl-panel__dot--event { background: var(--c-event); }
+
+.tl-panel__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.tl-panel__date {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.tl-panel__title {
+  font-size: 1rem;
+  font-weight: 700;
   color: var(--text);
 }
 
-.tl-desc {
+.tl-panel__desc {
   font-size: 0.84rem;
   color: var(--text-muted);
   line-height: 1.6;
-  flex: 1;
+  margin-top: 4px;
 }
 
-/* カード右下の通し番号 */
-.tl-card-num {
-  position: absolute;
-  bottom: 14px;
-  right: 18px;
-  font-size: 2rem;
+.tl-panel__num {
+  font-size: 1.6rem;
   font-weight: 800;
-  color: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.06);
   line-height: 1;
+  flex-shrink: 0;
+  user-select: none;
+}
+.tl-panel__num em {
+  font-size: 0.9rem;
+  font-style: normal;
+}
+
+/* ── スクロールトラック ── */
+.tl-track {
+  /* overflow-x のみ有効にするため高さを明示 */
+  height: var(--canvas-h);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+  /* 左右フェード */
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
+  mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
+}
+.tl-track:active { cursor: grabbing; }
+.tl-track::-webkit-scrollbar { display: none; }
+
+/* ── キャンバス（絶対配置の親） ── */
+.tl-canvas {
+  position: relative;
+  height: 100%;
+}
+
+/* ── 年区切り ── */
+.tl-year-sep {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background: color-mix(in srgb, var(--border) 60%, transparent);
   pointer-events: none;
 }
 
-/* ── スペーサー（末尾の余白） ── */
-.tl-spacer {
-  flex-shrink: 0;
-  width: calc((100vw - min(1100px, 100vw - 48px)) / 2 + 24px);
+.tl-year-sep__label {
+  position: absolute;
+  top: calc(var(--axis-top) + 18px);
+  left: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.18);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
 }
 
-/* ── ドットナビ ── */
-.tl-dots {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-top: 24px;
-}
-
-.tl-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
+/* ── 横軸 ── */
+.tl-axis {
+  position: absolute;
+  top: var(--axis-top);
+  left: 0;
+  right: 0;
+  height: 2px;
   background: var(--border);
-  border: none;
-  cursor: pointer;
+  overflow: hidden;
+}
+
+/* スクロール進捗に連動したハイライト */
+.tl-axis__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--c-event));
+  transition: width 0.1s linear;
+}
+
+/* ── ノード ── */
+.tl-node {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 140px;
+}
+
+/* 縦コネクタ線 */
+.tl-connector {
+  position: absolute;
+  width: 1px;
+  opacity: 0.4;
+  transition: opacity 0.25s;
+}
+
+.tl-node--up .tl-connector {
+  top: calc(var(--axis-top) - (var(--axis-top) - 24px));
+  height: calc(var(--axis-top) - 24px);
+  bottom: auto;
+}
+
+.tl-node--dn .tl-connector {
+  top: var(--axis-top);
+  height: calc(var(--lbl-space) - 16px);
+}
+
+.tl-connector--dev   { background: var(--c-dev); }
+.tl-connector--trip  { background: var(--c-trip); }
+.tl-connector--org   { background: var(--c-org); }
+.tl-connector--event { background: var(--c-event); }
+
+.tl-node.is-active .tl-connector { opacity: 1; }
+
+/* ドット */
+.tl-dot {
+  position: absolute;
+  top: calc(var(--axis-top) - 6px);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--bg);
   padding: 0;
-  transition: background 0.2s, transform 0.2s, width 0.2s;
+  cursor: pointer;
+  z-index: 3;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.tl-dot.dot-year {
-  background: rgba(37, 99, 235, 0.4);
-  width: 10px;
-  height: 10px;
+.tl-dot--dev   { background: var(--c-dev); }
+.tl-dot--trip  { background: var(--c-trip); }
+.tl-dot--org   { background: var(--c-org); }
+.tl-dot--event { background: var(--c-event); }
+
+.tl-dot:hover  { transform: scale(1.5); }
+
+.tl-dot.is-active {
+  transform: scale(1.8);
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,0.12),
+    0 0 12px currentColor;
 }
 
-.tl-dot.active {
-  background: var(--accent);
-  transform: scale(1.3);
-  width: 20px;
-  border-radius: 3px;
+/* ── ラベル ── */
+.tl-label {
+  position: absolute;
+  width: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.tl-label--up {
+  /* 軸の上にテキストを積み上げ */
+  bottom: calc(100% - var(--axis-top) + 14px);
+  top: 0;
+  justify-content: flex-end;
+}
+
+.tl-label--dn {
+  top: calc(var(--axis-top) + 18px);
+}
+
+.tl-label__month {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.tl-label__name {
+  font-size: 0.73rem;
+  color: var(--text);
+  font-weight: 500;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tl-node.is-active .tl-label__name {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ── プログレスバー（下部） ── */
+.tl-progress {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.tl-progress__bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--c-event));
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
+.tl-progress__labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
 }
 
 /* ── モバイル ── */
 @media (max-width: 640px) {
-  .tl-item-card {
-    width: calc(100vw - 96px);
+  .timeline-section {
+    --axis-top:  130px;
+    --lbl-space: 100px;
   }
-  .tl-year-card {
-    width: 88px;
-    min-height: 180px;
+
+  .tl-panel {
+    flex-wrap: wrap;
+    gap: 10px;
   }
-  .tl-year-label {
-    font-size: 1.5rem;
-  }
+
+  .tl-panel__num { display: none; }
+
   .tl-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
   }
+
+  .tl-label { width: 100px; }
+  .tl-label__name { font-size: 0.65rem; }
 }
