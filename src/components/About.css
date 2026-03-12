@@ -1,0 +1,102 @@
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.about-info {
+  grid-column: 1 / -1;
+}
+
+.about-info h3,
+.about-activities h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--accent);
+}
+
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.info-table td {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.info-table td:first-child {
+  color: var(--text-muted);
+  width: 100px;
+  font-weight: 500;
+}
+
+.about-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.card-header h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.card-icon {
+  font-size: 1.3rem;
+}
+
+.strength-card p,
+.weakness-card p {
+  color: var(--text-muted);
+  font-size: 0.93rem;
+  white-space: pre-line;
+}
+
+.about-activities {
+  grid-column: 1 / -1;
+}
+
+.activity-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.activity-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+}
+
+.activity-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+  .about-info {
+    grid-column: 1;
+  }
+  .about-activities {
+    grid-column: 1;
+  }
+}
