@@ -25,7 +25,7 @@ export default function Contact() {
           </a>
 
           <a
-            href="https://hirolia.com/"
+            href="https://hirolia-order.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="contact-card card"
