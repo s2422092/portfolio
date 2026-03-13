@@ -2,7 +2,6 @@ import { useRef, useState, useEffect, useCallback } from 'react';
 import { timeline } from '../data/profile';
 import './Timeline.css';
 
-// 古い順（左=過去、右=最新）にフラット化
 function buildSlides(data) {
   const slides = [];
   [...data].reverse().forEach((yearBlock) => {
@@ -15,7 +14,6 @@ function buildSlides(data) {
 
 const slides = buildSlides(timeline);
 
-// 年ごとの最初のインデックス
 function getYearStarts(slides) {
   const map = {};
   slides.forEach((s, i) => { if (!(s.year in map)) map[s.year] = i; });
@@ -30,12 +28,14 @@ function getCategory(title) {
   return 'event';
 }
 
-const COL_W = 160; // px — JS と CSS で共有
-const PAD   = 64;
+const CATEGORY_LABEL = { dev: '開発', trip: '旅行', org: '委員・活動', event: 'その他' };
+
+const COL_W = 200;
+const PAD   = 80;
 
 export default function Timeline() {
-  const trackRef   = useRef(null);
-  const [active, setActive] = useState(slides.length - 1);
+  const trackRef = useRef(null);
+  const [active,   setActive]   = useState(slides.length - 1);
   const [progress, setProgress] = useState(1);
   const drag = useRef(null);
 
@@ -46,14 +46,11 @@ export default function Timeline() {
     setTimeout(() => { t.scrollLeft = t.scrollWidth; }, 80);
   }, []);
 
-  // スクロール → progress バー & active 更新
   const onScroll = useCallback(() => {
     const t = trackRef.current;
     if (!t) return;
     const p = t.scrollLeft / (t.scrollWidth - t.clientWidth);
     setProgress(Math.max(0, Math.min(1, p)));
-
-    // 画面中央に最も近いドットを active に
     const cx = t.getBoundingClientRect().left + t.clientWidth / 2;
     let best = 0, bestDist = Infinity;
     t.querySelectorAll('.tl-dot').forEach((el, i) => {
@@ -76,45 +73,70 @@ export default function Timeline() {
     dot?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
   };
 
-  // マウスドラッグ
+  // クリック → active を即時更新 & スクロール
+  const handleNodeClick = (i) => {
+    if (drag.current?.moved) return; // ドラッグ中は無視
+    setActive(i);
+    scrollTo(i);
+  };
+
   const onMouseDown = (e) => {
-    drag.current = { x: e.clientX, sl: trackRef.current.scrollLeft };
+    drag.current = { x: e.clientX, sl: trackRef.current.scrollLeft, moved: false };
   };
   const onMouseMove = (e) => {
     if (!drag.current) return;
-    trackRef.current.scrollLeft = drag.current.sl - (e.clientX - drag.current.x);
+    const dx = e.clientX - drag.current.x;
+    if (Math.abs(dx) > 4) drag.current.moved = true;
+    trackRef.current.scrollLeft = drag.current.sl - dx;
   };
   const onMouseUp = () => { drag.current = null; };
 
-  const cur = slides[active];
+  const cur    = slides[active];
+  const cat    = getCategory(cur.title);
   const totalW = COL_W * slides.length + PAD * 2;
 
   return (
     <section id="timeline" className="timeline-section">
       <div className="container">
 
-        {/* ヘッダー */}
+        {/* ── ヘッダー ── */}
         <div className="tl-header">
           <div>
             <h2 className="section-title">Timeline</h2>
-            <p className="tl-sub">← 過去 &nbsp;|&nbsp; 最新 →</p>
+            <p className="tl-sub">← 過去 &nbsp;｜&nbsp; 最新 →　　出来事をクリックで詳細表示</p>
           </div>
           <div className="tl-legend">
-            {[['dev','開発'],['trip','旅行'],['org','委員・活動'],['event','その他']].map(([k,l])=>(
+            {Object.entries(CATEGORY_LABEL).map(([k, l]) => (
               <span key={k} className={`tl-leg tl-leg--${k}`}>{l}</span>
             ))}
           </div>
         </div>
 
-        {/* 詳細パネル */}
-        <div className="tl-panel">
-          <div className={`tl-panel__dot tl-panel__dot--${getCategory(cur.title)}`} />
-          <div className="tl-panel__body">
+        {/* ── 詳細パネル（クリックした出来事を表示） ── */}
+        <div className={`tl-panel tl-panel--${cat}`} key={active}>
+          <div className="tl-panel__left">
+            <span className={`tl-panel__badge tl-leg--${cat}`}>{CATEGORY_LABEL[cat]}</span>
             <span className="tl-panel__date">{cur.year} {cur.month}</span>
-            <strong className="tl-panel__title">{cur.title}</strong>
+          </div>
+          <div className="tl-panel__body">
+            <h3 className="tl-panel__title">{cur.title}</h3>
             <p className="tl-panel__desc">{cur.desc}</p>
           </div>
-          <span className="tl-panel__num">{String(active + 1).padStart(2,'0')}<em>/{slides.length}</em></span>
+          <div className="tl-panel__nav">
+            <button
+              className="tl-panel__nav-btn"
+              disabled={active === 0}
+              onClick={() => { setActive(active - 1); scrollTo(active - 1); }}
+              aria-label="前の出来事"
+            >←</button>
+            <span className="tl-panel__count">{active + 1}<em>/{slides.length}</em></span>
+            <button
+              className="tl-panel__nav-btn"
+              disabled={active === slides.length - 1}
+              onClick={() => { setActive(active + 1); scrollTo(active + 1); }}
+              aria-label="次の出来事"
+            >→</button>
+          </div>
         </div>
       </div>
 
@@ -129,7 +151,7 @@ export default function Timeline() {
       >
         <div className="tl-canvas" style={{ width: totalW }}>
 
-          {/* 年区切り線 */}
+          {/* 年区切り */}
           {Object.entries(yearStarts).map(([year, idx]) => (
             <div
               key={year}
@@ -145,11 +167,11 @@ export default function Timeline() {
             <div className="tl-axis__fill" style={{ width: `${progress * 100}%` }} />
           </div>
 
-          {/* イベントノード */}
+          {/* ノード */}
           {slides.map((s, i) => {
-            const cat  = getCategory(s.title);
-            const up   = i % 2 === 0;
-            const cx   = i * COL_W + PAD + COL_W / 2;
+            const c      = getCategory(s.title);
+            const up     = i % 2 === 0;
+            const cx     = i * COL_W + PAD + COL_W / 2;
             const isActive = i === active;
             return (
               <div
@@ -157,28 +179,24 @@ export default function Timeline() {
                 className={`tl-node tl-node--${up ? 'up' : 'dn'} ${isActive ? 'is-active' : ''}`}
                 style={{ left: cx }}
               >
-                {/* 上ラベル */}
                 {up && (
                   <div className="tl-label tl-label--up">
-                    <span className="tl-label__month">{s.month}</span>
+                    <span className={`tl-label__month tl-label__month--${c}`}>{s.month}</span>
                     <span className="tl-label__name">{s.title}</span>
                   </div>
                 )}
 
-                {/* 縦コネクタ */}
-                <div className={`tl-connector tl-connector--${cat}`} />
+                <div className={`tl-connector tl-connector--${c}`} />
 
-                {/* ドット */}
                 <button
-                  className={`tl-dot tl-dot--${cat} ${isActive ? 'is-active' : ''}`}
-                  onClick={() => scrollTo(i)}
+                  className={`tl-dot tl-dot--${c} ${isActive ? 'is-active' : ''}`}
+                  onClick={() => handleNodeClick(i)}
                   aria-label={s.title}
                 />
 
-                {/* 下ラベル */}
                 {!up && (
                   <div className="tl-label tl-label--dn">
-                    <span className="tl-label__month">{s.month}</span>
+                    <span className={`tl-label__month tl-label__month--${c}`}>{s.month}</span>
                     <span className="tl-label__name">{s.title}</span>
                   </div>
                 )}
