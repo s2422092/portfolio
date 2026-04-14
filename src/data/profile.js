@@ -34,6 +34,17 @@ export const profile = {
 
 export const projects = [
   {
+    id: 6,
+    title: 'ClearShift — シフト管理アプリ',
+    event: '大学祭実行委員会 自主開発',
+    period: '2026年3月〜',
+    description: '武蔵野大学大学祭実行委員会での使用を目的に開発中のシフト管理アプリ。委員会メンバーのシフト作成・調整を効率化し、運営をスムーズにすることを目指す。',
+    tech: ['React', 'JavaScript'],
+    github: 'https://github.com/s2422092/ClearShift',
+    demo: 'https://clear-shift-r0pnrrq1d-s2422092s-projects.vercel.app/',
+    role: '開発リード',
+  },
+  {
     id: 1,
     title: 'モバイルオーダー (PayPay対応)',
     event: '第一回DS学部内ハッカソン',
@@ -91,7 +102,8 @@ export const timeline = [
     year: '2026年',
     items: [
       { month: '1月', title: '成人式・同窓会幹事', desc: '印西市20歳を祝う会の運営委員として成人式を企画・運営' },
-      { month: '2月', title: 'Aihack 参加', desc: 'AI活用のハッカソンに参加予定' },
+      { month: '2月', title: 'スノーボード（地元メンバー）', desc: '地元のメンバーと2月の頭にスノーボードへ。毎年恒例の仲間との冬の楽しみ' },
+      { month: '3月', title: 'スノーボード幹事（大学の友達）/ シフトアプリ開発', desc: '自ら幹事となり大学の友人を集めてスノーボードを企画・実施。また大学祭実行委員会で使用するシフト管理アプリ「ClearShift」の開発を開始' },
     ],
   },
   {
