@@ -64,7 +64,7 @@ export default function Projects() {
                 <div className="proj-main__highlight">
                   <p>実際の店舗に導入済み</p>
                   <p>個人店舗向けモバイルオーダーの課題を解決</p>
-                  <p>PayPay / QR決済に対応</p>
+                  <p>多言語対応：日本語、英語、ネパール語</p>
                 </div>
               </div>
             </div>

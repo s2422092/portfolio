@@ -38,7 +38,7 @@ export const projects = [
     event: '大学祭実行委員会 自主開発',
     period: '2026年3月〜',
     description: '武蔵野大学大学祭実行委員会での使用を目的に開発中のシフト管理アプリ。委員会メンバーのシフト作成・調整を効率化し、運営をスムーズにすることを目指す。',
-    tech: ['React', 'JavaScript'],
+    tech: ['HTML', 'Tailwind CSS','Flask'],
     github: 'https://github.com/s2422092/ClearShift',
     demo: 'https://clear-shift-r0pnrrq1d-s2422092s-projects.vercel.app/',
     role: '開発リード',
