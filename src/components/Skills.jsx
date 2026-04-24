@@ -3,28 +3,28 @@ import './Skills.css';
 const skillGroups = [
   {
     category: 'フロントエンド',
-    icon: '🖥️',
+    icon: 'web',
     items: ['HTML', 'CSS', 'JavaScript', 'Tailwind CSS', 'React'],
   },
   {
     category: 'バックエンド',
-    icon: '⚙️',
+    icon: 'dns',
     items: ['Python', 'Flask'],
   },
   {
     category: 'データベース',
-    icon: '🗄️',
+    icon: 'storage',
     items: ['SQLite'],
   },
   {
     category: 'API / 外部サービス',
-    icon: '🔌',
+    icon: 'electrical_services',
     items: ['ChatGPT API', 'PayPay API'],
   },
   {
     category: 'ツール',
-    icon: '🛠️',
-    items: ['Git', 'GitHub', 'Vercel'],
+    icon: 'build',
+    items: ['Git', 'GitHub', 'Vercel', 'Supabase', 'Render'],
   },
 ];
 
@@ -41,7 +41,7 @@ export default function Skills() {
           {skillGroups.map((group) => (
             <div key={group.category} className="skill-group card">
               <div className="skill-group__header">
-                <span className="skill-group__icon">{group.icon}</span>
+                <span className="material-icons skill-group__icon">{group.icon}</span>
                 <h3 className="skill-group__title">{group.category}</h3>
               </div>
               <div className="skill-group__tags">
