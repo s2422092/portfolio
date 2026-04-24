@@ -9,51 +9,69 @@
   max-width: 600px;
 }
 
-.skills-grid {
+/* グループカード群 */
+.skill-groups {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px 40px;
-  margin-bottom: 48px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
-.skill-header {
+.skill-group {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px 22px;
 }
 
-.skill-name {
-  font-weight: 500;
-  font-size: 0.95rem;
-}
-
-.skill-level {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-}
-
-.skill-bar {
-  height: 6px;
-  background: var(--border);
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.skill-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--primary), var(--accent));
-  border-radius: 3px;
-  transition: width 1s ease-out;
-}
-
-.tech-tags {
+.skill-group__header {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
 }
 
-@media (max-width: 640px) {
-  .skills-grid {
+.skill-group__icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.skill-group__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* タグ */
+.skill-group__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-tag {
+  background: rgba(37, 99, 235, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  color: #93c5fd;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.skill-tag:hover {
+  background: rgba(37, 99, 235, 0.2);
+  border-color: rgba(37, 99, 235, 0.5);
+}
+
+@media (max-width: 900px) {
+  .skill-groups {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .skill-groups {
     grid-template-columns: 1fr;
   }
 }
