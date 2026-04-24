@@ -26,7 +26,6 @@ export const profile = {
     { name: 'Tailwind CSS', level: 70 },
     { name: 'Python', level: 70 },
     { name: 'Flask', level: 65 },
-    { name: 'PHP', level: 50 },
     { name: 'SQLite / DB', level: 60 },
     { name: 'React', level: 40 },
   ],
@@ -102,7 +101,7 @@ export const timeline = [
     year: '2026年',
     items: [
       { month: '3月', title: 'スノーボード幹事（大学の友達）/ シフトアプリ開発', desc: '自ら幹事となり大学の友人を集めてスノーボードを企画・実施。また大学祭実行委員会で使用するシフト管理アプリ「ClearShift」の開発を開始' },
-      { month: '2月', title: 'スノーボード（地元メンバー）', desc: '地元のメンバーと2月の頭にスノーボードへ。毎年恒例の仲間との冬の楽しみ' },
+      { month: '2月', title: 'スノーボード（地元メンバー）/ アイフル貸し倒れコンペ参加', desc: '地元のメンバーと2月の頭にスノーボードへ。また、アイフルの貸し倒れ予測に関するデータ分析コンペに参加' },
       { month: '1月', title: '成人式・同窓会幹事', desc: '印西市20歳を祝う会の運営委員として成人式を企画・運営' },
     ],
   },
