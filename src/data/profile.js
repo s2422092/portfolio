@@ -33,6 +33,18 @@ export const profile = {
 
 export const projects = [
   {
+    id: 7,
+    title: 'ルートフル — AI旅行プラン提案アプリ',
+    event: '技育キャンプ ハッカソン',
+    period: '2026年4月',
+    description: '大人数旅行の計画課題を解決するWebアプリ。Google Maps・楽天トラベルAPIで実在スポットを事前取得し、AIはそのリストからのみ選択する設計でハルシネーションを抑制。予算配分・こだわりモード選択などユーザー入力とAI自動生成の役割分担を工夫し、みんなで1画面を囲む対面利用を想定したUXを実現。※ Renderを使用しているため、デモリンクが閲覧できない場合があります。',
+    tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Flask', 'Supabase', 'ChatGPT API', 'Google Maps API', '楽天トラベル API', 'Mapbox'],
+    github: 'https://github.com/manatoishihara/hackathon_2026-04-13',
+    demo: 'https://hackathon-2026-04-13.vercel.app/',
+    role: 'フロントエンド / 企画',
+    featured: false,
+  },
+  {
     id: 6,
     title: 'ClearShift — シフト管理アプリ',
     event: '大学祭実行委員会 自主開発',
@@ -100,6 +112,7 @@ export const timeline = [
   {
     year: '2026年',
     items: [
+      { month: '4月', title: '技育キャンプ ハッカソン参加 — ルートフル', desc: 'AI×複数API連携で大人数旅行プランを自動生成するWebアプリ「ルートフル」を開発。Google Maps・楽天トラベルAPIで実在スポットを取得しハルシネーションを抑制する設計にこだわった' },
       { month: '3月', title: 'スノーボード幹事（大学の友達）/ シフトアプリ開発', desc: '自ら幹事となり大学の友人を集めてスノーボードを企画・実施。また大学祭実行委員会で使用するシフト管理アプリ「ClearShift」の開発を開始' },
       { month: '2月', title: 'スノーボード（地元メンバー）/ アイフル貸し倒れコンペ参加', desc: '地元のメンバーと2月の頭にスノーボードへ。また、アイフルの貸し倒れ予測に関するデータ分析コンペに参加' },
       { month: '1月', title: '成人式・同窓会幹事', desc: '印西市20歳を祝う会の運営委員として成人式を企画・運営' },
