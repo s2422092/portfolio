@@ -19,7 +19,7 @@ const skillGroups = [
   {
     category: 'API / 外部サービス',
     icon: 'electrical_services',
-    items: ['ChatGPT API', 'PayPay API'],
+    items: ['ChatGPT API', 'PayPay API','楽天API'],
   },
   {
     category: 'ツール',
