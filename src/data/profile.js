@@ -73,7 +73,7 @@ export const projects = [
     description: '特定のインドネパール料理店のためにカスタマイズしたモバイルオーダーシステム。実際の店舗ニーズに対応した機能設計。',
     tech: ['HTML', 'CSS', 'JavaScript', 'Flask'],
     github: 'https://github.com/s2422092/hirolia',
-    demo: 'https://hirolia.com/',
+    demo: 'https://hirolia-order.com/',
     role: '開発リード',
   },
   {
