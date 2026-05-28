@@ -49,20 +49,20 @@
 }
 
 .skill-tag {
-  background: rgba(37, 99, 235, 0.1);
-  border: 1px solid rgba(37, 99, 235, 0.25);
-  color: #93c5fd;
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
   padding: 5px 14px;
-  border-radius: 20px;
+  border-radius: 4px;
   font-size: 0.85rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background 0.15s, color 0.15s;
 }
 
 .skill-tag:hover {
-  background: rgba(37, 99, 235, 0.2);
-  border-color: rgba(37, 99, 235, 0.5);
+  background: #3d3d3d;
+  color: var(--text);
 }
 
 @media (max-width: 900px) {
