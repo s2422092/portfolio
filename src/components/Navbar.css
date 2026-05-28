@@ -9,7 +9,7 @@
 }
 
 .navbar.scrolled {
-  background: rgba(15, 23, 42, 0.95);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   box-shadow: 0 1px 0 var(--border);
 }
@@ -25,9 +25,6 @@
   font-weight: 700;
   color: var(--text);
   text-decoration: none;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .nav-links {
@@ -77,7 +74,7 @@
     right: 0;
     flex-direction: column;
     gap: 0;
-    background: rgba(15, 23, 42, 0.98);
+    background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(12px);
     max-height: 0;
     overflow: hidden;

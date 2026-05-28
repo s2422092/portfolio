@@ -10,12 +10,12 @@
   --primary: #2383e2;
   --primary-dark: #1a6fc4;
   --accent: #2383e2;
-  --bg: #191919;
-  --bg-card: #252525;
-  --bg-card2: #2f2f2f;
-  --text: #fffffe;
-  --text-muted: #9b9a97;
-  --border: #373737;
+  --bg: #ffffff;
+  --bg-card: #f7f6f3;
+  --bg-card2: #efeeea;
+  --text: #37352f;
+  --text-muted: #787774;
+  --border: #e3e2e0;
   --radius: 8px;
 }
 

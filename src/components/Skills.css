@@ -1,5 +1,5 @@
 .skills-section {
-  background: linear-gradient(180deg, var(--bg) 0%, rgba(30, 41, 59, 0.3) 100%);
+  background: var(--bg);
 }
 
 .skills-intro {
@@ -61,7 +61,7 @@
 }
 
 .skill-tag:hover {
-  background: #3d3d3d;
+  background: #e5e4e0;
   color: var(--text);
 }
 
