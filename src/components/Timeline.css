@@ -119,10 +119,11 @@
 .tl-panel__img {
   margin-top: 12px;
   width: 100%;
-  max-height: 200px;
-  object-fit: cover;
+  max-height: 360px;
+  object-fit: contain;
   border-radius: 8px;
   border: 1px solid var(--border);
+  background: var(--bg-card2);
 }
 
 .tl-panel__nav {
