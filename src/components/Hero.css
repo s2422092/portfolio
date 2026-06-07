@@ -90,8 +90,8 @@
 /* ── アバター ── */
 .avatar-wrap {
   flex-shrink: 0;
-  width: 112px;
-  height: 112px;
+  width: 196px;
+  height: 196px;
   border-radius: 50%;
   border: 4px solid var(--bg);
   overflow: hidden;
@@ -272,8 +272,8 @@
   }
 
   .avatar-wrap {
-    width: 84px;
-    height: 84px;
+    width: 147px;
+    height: 147px;
   }
 
   .hero-text {
