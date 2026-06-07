@@ -133,6 +133,13 @@ export default function Timeline() {
           <div className="tl-panel__body">
             <h3 className="tl-panel__title">{cur.title}</h3>
             <p className="tl-panel__desc">{cur.desc}</p>
+            {cur.img && (
+              <img
+                src={cur.img}
+                alt={cur.title}
+                className="tl-panel__img"
+              />
+            )}
           </div>
           <div className="tl-panel__nav">
             <button

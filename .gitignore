@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# 旅行写真（個人情報保護のためGitHub非公開）
+public/vietnam.jpg
+public/tochigi.jpg
