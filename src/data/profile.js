@@ -95,7 +95,7 @@ export const projects = [
     title: 'インドネパール料理屋特化モバイルオーダー',
     event: '第二回DS学部内ハッカソン',
     period: '2025年12月',
-    description: 'Hirolia（ヒロリア）は、インド料理レストラン向けの多店舗対応モバイルオーダーシステム。QRコードをスキャンするだけでスマホ上での注文・会計が完結する。Flask + PostgreSQL で構築し、日本語・英語・ネパール語の3言語に対応。スタッフ画面ではリアルタイムで注文確認・調理管理が可能で、USBレシートプリンターへの自動印刷機能も備えている。',
+    description: 'このプロダクトは、インド料理レストラン向けの多店舗対応モバイルオーダーシステム。QRコードをスキャンするだけでスマホ上での注文が完結する。Flask + PostgreSQL で構築し、日本語・英語・ネパール語の3言語に対応。スタッフ画面ではリアルタイムで注文確認・調理管理が可能で、USBレシートプリンターへの自動印刷機能も備えている。',
     tech: ['HTML', 'CSS', 'JavaScript', 'Flask', 'PostgreSQL'],
     github: 'https://github.com/s2422092/hirolia',
     demo: 'https://hirolia-order.com/',
