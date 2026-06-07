@@ -33,6 +33,17 @@ export const profile = {
 
 export const projects = [
   {
+    id: 8,
+    title: 'Clearcode — コミット翻訳・Slack通知アプリ',
+    event: '技育CAMP ハッカソン vol.3　サポーターズ賞受賞',
+    period: '2026年6月',
+    description: 'GitHubのコミット内容をAIで非エンジニア向けの日本語に翻訳し、Slackへ自動通知するWebアプリ。チームリーダーとして技術選定・アーキテクチャ設計・タスク分担を統括。Groq・Gemini・OpenAIの3プロバイダーを切り替え可能なAI設計とし、WebhookはGitHubの10秒タイムアウト対策として即時200返却＋バックグラウンド処理を実現。diff画像をGitHub風にSlack添付する独自機能や、AES-GCM暗号化・HMAC-SHA256によるセキュリティ設計にもこだわった。',
+    tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Supabase', 'Gemini API', 'GitHub OAuth', 'Slack OAuth', 'Vercel'],
+    github: 'https://github.com/Itsuki-Hatakeyama/GCH26-3',
+    demo: 'https://gch-26-3.vercel.app/',
+    role: 'チームリーダー / フルスタック',
+  },
+  {
     id: 7,
     title: 'ルートフル — AI旅行プラン提案アプリ',
     event: '技育キャンプ ハッカソン',
@@ -112,6 +123,7 @@ export const timeline = [
   {
     year: '2026年',
     items: [
+      { month: '6月', title: '技育CAMP ハッカソン vol.3 — Clearcode　サポーターズ賞受賞', desc: 'GitHubコミットをAIで非エンジニア向け日本語に翻訳しSlack通知するWebアプリをチームリーダーとして開発。技育CAMP vol.3にてサポーターズ賞を受賞' },
       { month: '4月', title: '技育キャンプ ハッカソン参加 — ルートフル', desc: 'AI×複数API連携で大人数旅行プランを自動生成するWebアプリ「ルートフル」を開発。Google Maps・楽天トラベルAPIで実在スポットを取得しハルシネーションを抑制する設計にこだわった' },
       { month: '3月', title: 'スノーボード幹事（大学の友達）/ シフトアプリ開発', desc: '自ら幹事となり大学の友人を集めてスノーボードを企画・実施。また大学祭実行委員会で使用するシフト管理アプリ「ClearShift」の開発を開始' },
       { month: '2月', title: 'スノーボード（地元メンバー）/ アイフル貸し倒れコンペ参加', desc: '地元のメンバーと2月の頭にスノーボードへ。また、アイフルの貸し倒れ予測に関するデータ分析コンペに参加' },
