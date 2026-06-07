@@ -4,27 +4,27 @@ const skillGroups = [
   {
     category: 'フロントエンド',
     icon: 'web',
-    items: ['HTML', 'CSS', 'JavaScript', 'Tailwind CSS', 'React'],
+    items: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'Tailwind CSS', 'React', 'Next.js', 'shadcn/ui'],
   },
   {
     category: 'バックエンド',
     icon: 'dns',
-    items: ['Python', 'Flask'],
+    items: ['Python', 'Flask', 'JWT'],
   },
   {
     category: 'データベース',
     icon: 'storage',
-    items: ['SQLite'],
+    items: ['SQLite', 'Supabase (PostgreSQL)'],
   },
   {
     category: 'API / 外部サービス',
     icon: 'electrical_services',
-    items: ['ChatGPT API', 'PayPay API','楽天API'],
+    items: ['ChatGPT API', 'Groq API', 'Gemini API', 'PayPay API', '楽天API', 'GitHub OAuth', 'Slack OAuth'],
   },
   {
     category: 'ツール',
     icon: 'build',
-    items: ['Git', 'GitHub', 'Vercel', 'Supabase', 'Render'],
+    items: ['Git', 'GitHub', 'Vercel', 'Render'],
   },
 ];
 
