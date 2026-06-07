@@ -54,6 +54,7 @@
 
 .card-icon {
   font-size: 1.3rem;
+  color: var(--accent);
 }
 
 .strength-card p,

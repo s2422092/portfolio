@@ -22,14 +22,14 @@ export default function About() {
           <div className="about-cards">
             <div className="card strength-card">
               <div className="card-header">
-                <span className="card-icon">💪</span>
+                <span className="material-icons card-icon">thumb_up</span>
                 <h3>長所</h3>
               </div>
               <p>{profile.strengths}</p>
             </div>
             <div className="card weakness-card">
               <div className="card-header">
-                <span className="card-icon">🔧</span>
+                <span className="material-icons card-icon">build</span>
                 <h3>短所・改善</h3>
               </div>
               <p>{profile.weakness}</p>
