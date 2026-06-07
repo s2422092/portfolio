@@ -60,10 +60,11 @@ export default function Hero() {
               <p className="hero-univ">{profile.university}</p>
 
               <div className="hero-badges">
-                <span className="badge">データサイエンス</span>
+                <span className="badge">実運用アプリ開発</span>
                 <span className="badge">Web開発</span>
-                <span className="badge">ハッカソン×5</span>
+                <span className="badge">ハッカソン×7</span>
                 <span className="badge">チームリーダー</span>
+                <span className="badge">海外×2</span>
               </div>
 
               <div className="hero-cta">
