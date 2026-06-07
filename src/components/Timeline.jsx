@@ -31,30 +31,42 @@ function getCategory(title) {
 const CATEGORY_LABEL = { dev: '開発', trip: '旅行', org: '委員・活動', event: 'その他' };
 
 const COL_W = 200;
-const PAD   = 200;
 
 export default function Timeline() {
-  const trackRef = useRef(null);
-  const [active,   setActive]   = useState(slides.length - 1);
+  const trackRef  = useRef(null);
+  const [halfW,   setHalfW]   = useState(0);   // トラック幅の半分（動的）
+  const [active,   setActive]  = useState(slides.length - 1);
   const [progress, setProgress] = useState(1);
   const drag = useRef(null);
 
-  // 初期：右端（最新）へ
+  // トラック幅を測定し、PAD = 幅の半分 に設定
   useEffect(() => {
     const t = trackRef.current;
     if (!t) return;
-    setTimeout(() => { t.scrollLeft = t.scrollWidth; }, 80);
+    const update = () => setHalfW(Math.ceil(t.clientWidth / 2));
+    update();
+    const obs = new ResizeObserver(update);
+    obs.observe(t);
+    return () => obs.disconnect();
   }, []);
+
+  // halfW 確定後に右端（最新）へスクロール
+  useEffect(() => {
+    if (halfW === 0) return;
+    const t = trackRef.current;
+    if (!t) return;
+    t.scrollLeft = t.scrollWidth;
+  }, [halfW]);
 
   const onScroll = useCallback(() => {
     const t = trackRef.current;
     if (!t) return;
-    const p = t.scrollLeft / (t.scrollWidth - t.clientWidth);
-    setProgress(Math.max(0, Math.min(1, p)));
-    const cx = t.getBoundingClientRect().left + t.clientWidth / 2;
+    const max = t.scrollWidth - t.clientWidth;
+    setProgress(max > 0 ? Math.max(0, Math.min(1, t.scrollLeft / max)) : 1);
+    const center = t.getBoundingClientRect().left + t.clientWidth / 2;
     let best = 0, bestDist = Infinity;
     t.querySelectorAll('.tl-dot').forEach((el, i) => {
-      const d = Math.abs(el.getBoundingClientRect().left - cx);
+      const d = Math.abs(el.getBoundingClientRect().left - center);
       if (d < bestDist) { bestDist = d; best = i; }
     });
     setActive(best);
@@ -67,17 +79,18 @@ export default function Timeline() {
     return () => t.removeEventListener('scroll', onScroll);
   }, [onScroll]);
 
+  // PAD = halfW にすることで、どのノードも正確に中央へスクロールできる
   const scrollTo = (i) => {
     const t = trackRef.current;
     if (!t) return;
-    const cx = i * COL_W + PAD + COL_W / 2;
-    const target = cx - t.clientWidth / 2;
+    // target = i * COL_W + halfW + COL_W/2 - halfW = i * COL_W + COL_W/2
+    // → 常に [0, maxScrollLeft] 内に収まる
+    const target = i * COL_W + COL_W / 2;
     t.scrollTo({ left: target, behavior: 'smooth' });
   };
 
-  // クリック → active を即時更新 & スクロール
   const handleNodeClick = (i) => {
-    if (drag.current?.moved) return; // ドラッグ中は無視
+    if (drag.current?.moved) return;
     setActive(i);
     scrollTo(i);
   };
@@ -95,13 +108,11 @@ export default function Timeline() {
 
   const cur    = slides[active];
   const cat    = getCategory(cur.title);
-  const totalW = COL_W * slides.length + PAD * 2;
+  const totalW = halfW > 0 ? COL_W * slides.length + halfW * 2 : 0;
 
   return (
     <section id="timeline" className="timeline-section">
       <div className="container">
-
-        {/* ── ヘッダー ── */}
         <div className="tl-header">
           <div>
             <h2 className="section-title">Timeline</h2>
@@ -114,7 +125,6 @@ export default function Timeline() {
           </div>
         </div>
 
-        {/* ── 詳細パネル（クリックした出来事を表示） ── */}
         <div className={`tl-panel tl-panel--${cat}`} key={active}>
           <div className="tl-panel__left">
             <span className={`tl-panel__badge tl-leg--${cat}`}>{CATEGORY_LABEL[cat]}</span>
@@ -142,7 +152,6 @@ export default function Timeline() {
         </div>
       </div>
 
-      {/* ── グラフ本体 ── */}
       <div
         className="tl-track"
         ref={trackRef}
@@ -151,64 +160,62 @@ export default function Timeline() {
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseUp}
       >
-        <div className="tl-canvas" style={{ width: totalW }}>
+        {totalW > 0 && (
+          <div className="tl-canvas" style={{ width: totalW }}>
 
-          {/* 年区切り */}
-          {Object.entries(yearStarts).map(([year, idx]) => (
-            <div
-              key={year}
-              className="tl-year-sep"
-              style={{ left: idx * COL_W + PAD }}
-            >
-              <span className="tl-year-sep__label">{year}</span>
-            </div>
-          ))}
-
-          {/* 横軸 */}
-          <div className="tl-axis">
-            <div className="tl-axis__fill" style={{ width: `${progress * 100}%` }} />
-          </div>
-
-          {/* ノード */}
-          {slides.map((s, i) => {
-            const c      = getCategory(s.title);
-            const up     = i % 2 === 0;
-            const cx     = i * COL_W + PAD + COL_W / 2;
-            const isActive = i === active;
-            return (
+            {Object.entries(yearStarts).map(([year, idx]) => (
               <div
-                key={i}
-                className={`tl-node tl-node--${up ? 'up' : 'dn'} ${isActive ? 'is-active' : ''}`}
-                style={{ left: cx }}
+                key={year}
+                className="tl-year-sep"
+                style={{ left: idx * COL_W + halfW }}
               >
-                {up && (
-                  <div className="tl-label tl-label--up">
-                    <span className={`tl-label__month tl-label__month--${c}`}>{s.month}</span>
-                    <span className="tl-label__name">{s.title}</span>
-                  </div>
-                )}
-
-                <div className={`tl-connector tl-connector--${c}`} />
-
-                <button
-                  className={`tl-dot tl-dot--${c} ${isActive ? 'is-active' : ''}`}
-                  onClick={() => handleNodeClick(i)}
-                  aria-label={s.title}
-                />
-
-                {!up && (
-                  <div className="tl-label tl-label--dn">
-                    <span className={`tl-label__month tl-label__month--${c}`}>{s.month}</span>
-                    <span className="tl-label__name">{s.title}</span>
-                  </div>
-                )}
+                <span className="tl-year-sep__label">{year}</span>
               </div>
-            );
-          })}
-        </div>
+            ))}
+
+            <div className="tl-axis">
+              <div className="tl-axis__fill" style={{ width: `${progress * 100}%` }} />
+            </div>
+
+            {slides.map((s, i) => {
+              const c        = getCategory(s.title);
+              const up       = i % 2 === 0;
+              const cx       = i * COL_W + halfW + COL_W / 2;
+              const isActive = i === active;
+              return (
+                <div
+                  key={i}
+                  className={`tl-node tl-node--${up ? 'up' : 'dn'} ${isActive ? 'is-active' : ''}`}
+                  style={{ left: cx }}
+                >
+                  {up && (
+                    <div className="tl-label tl-label--up">
+                      <span className={`tl-label__month tl-label__month--${c}`}>{s.month}</span>
+                      <span className="tl-label__name">{s.title}</span>
+                    </div>
+                  )}
+
+                  <div className={`tl-connector tl-connector--${c}`} />
+
+                  <button
+                    className={`tl-dot tl-dot--${c} ${isActive ? 'is-active' : ''}`}
+                    onClick={() => handleNodeClick(i)}
+                    aria-label={s.title}
+                  />
+
+                  {!up && (
+                    <div className="tl-label tl-label--dn">
+                      <span className={`tl-label__month tl-label__month--${c}`}>{s.month}</span>
+                      <span className="tl-label__name">{s.title}</span>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
 
-      {/* プログレスバー */}
       <div className="container">
         <div className="tl-progress">
           <div className="tl-progress__bar" style={{ width: `${progress * 100}%` }} />
