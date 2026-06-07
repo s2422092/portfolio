@@ -9,7 +9,7 @@ const skillGroups = [
   {
     category: 'バックエンド',
     icon: 'dns',
-    items: ['Python', 'Flask', 'JWT'],
+    items: ['Python', 'Flask'],
   },
   {
     category: 'データベース',
