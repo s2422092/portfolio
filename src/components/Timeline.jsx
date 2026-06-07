@@ -31,7 +31,7 @@ function getCategory(title) {
 const CATEGORY_LABEL = { dev: '開発', trip: '旅行', org: '委員・活動', event: 'その他' };
 
 const COL_W = 200;
-const PAD   = 80;
+const PAD   = 160;
 
 export default function Timeline() {
   const trackRef = useRef(null);
