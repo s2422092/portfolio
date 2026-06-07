@@ -47,6 +47,18 @@ export default function About() {
               ))}
             </ul>
           </div>
+
+          <div className="about-hobbies card">
+            <h3>趣味</h3>
+            <div className="hobby-list">
+              {profile.hobbies.map((h, i) => (
+                <div key={i} className="hobby-item">
+                  <span className="hobby-title">{h.title}</span>
+                  <p className="hobby-desc">{h.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
