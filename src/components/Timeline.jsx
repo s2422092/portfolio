@@ -69,8 +69,10 @@ export default function Timeline() {
 
   const scrollTo = (i) => {
     const t = trackRef.current;
-    const dot = t?.querySelectorAll('.tl-dot')[i];
-    dot?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    if (!t) return;
+    const cx = i * COL_W + PAD + COL_W / 2;
+    const target = cx - t.clientWidth / 2;
+    t.scrollTo({ left: target, behavior: 'smooth' });
   };
 
   // クリック → active を即時更新 & スクロール
