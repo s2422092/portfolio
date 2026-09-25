@@ -8,6 +8,7 @@
   --c-trip:  #34d399;
   --c-org:   #fbbf24;
   --c-event: #22d3ee;
+  --c-intern: #f472b6;
 
   --axis-top:  170px;
   --lbl-h:     140px;
@@ -49,6 +50,7 @@
 .tl-leg--trip  { color: var(--c-trip);  background: rgba(52,211,153,.12);  }
 .tl-leg--org   { color: var(--c-org);   background: rgba(251,191,36,.12);  }
 .tl-leg--event { color: var(--c-event); background: rgba(34,211,238,.12);  }
+.tl-leg--intern { color: var(--c-intern); background: rgba(244,114,182,.12); }
 
 /* ─── 詳細パネル ─── */
 .tl-panel {
@@ -69,6 +71,7 @@
 .tl-panel--trip  { border-left-color: var(--c-trip); }
 .tl-panel--org   { border-left-color: var(--c-org); }
 .tl-panel--event { border-left-color: var(--c-event); }
+.tl-panel--intern { border-left-color: var(--c-intern); }
 
 @keyframes panelIn {
   from { opacity: 0; transform: translateY(-6px); }
@@ -261,6 +264,7 @@
 .tl-connector--trip  { background: var(--c-trip); }
 .tl-connector--org   { background: var(--c-org); }
 .tl-connector--event { background: var(--c-event); }
+.tl-connector--intern { background: var(--c-intern); }
 .tl-node.is-active .tl-connector { opacity: 1; }
 
 /* ドット */
@@ -280,6 +284,7 @@
 .tl-dot--trip  { background: var(--c-trip); }
 .tl-dot--org   { background: var(--c-org); }
 .tl-dot--event { background: var(--c-event); }
+.tl-dot--intern { background: var(--c-intern); }
 
 .tl-dot:hover { transform: scale(1.6); cursor: pointer; }
 
@@ -322,6 +327,7 @@
 .tl-label__month--trip  { color: var(--c-trip);  background: rgba(52,211,153,.15);  }
 .tl-label__month--org   { color: var(--c-org);   background: rgba(251,191,36,.15);  }
 .tl-label__month--event { color: var(--c-event); background: rgba(34,211,238,.15);  }
+.tl-label__month--intern { color: var(--c-intern); background: rgba(244,114,182,.15); }
 
 .tl-label__name {
   font-size: 0.82rem;

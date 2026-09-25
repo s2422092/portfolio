@@ -36,6 +36,16 @@ export default function Projects() {
             <div className="proj-main__body">
               <div className="proj-main__info">
                 <h3 className="proj-main__title">{main.title}</h3>
+                {main.stats && (
+                  <div className="proj-main__stats">
+                    {main.stats.map((st) => (
+                      <div key={st.label} className="proj-main__stat">
+                        <span className="proj-main__stat-value">{st.value}</span>
+                        <span className="proj-main__stat-label">{st.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
                 <p className="proj-main__desc">{main.description}</p>
 
                 <div className="proj-main__tech">
@@ -62,7 +72,7 @@ export default function Projects() {
                   <span className="proj-main__role-value">{main.role}</span>
                 </div>
                 <div className="proj-main__highlight">
-                  <p>実際の店舗に導入済み</p>
+                  <p>4店舗で実運用中（累計5,000件の注文）</p>
                   <p>個人店舗向けモバイルオーダーの課題を解決</p>
                   <p>多言語対応：日本語、英語、ネパール語</p>
                 </div>

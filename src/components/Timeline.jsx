@@ -21,14 +21,16 @@ function getYearStarts(slides) {
 }
 const yearStarts = getYearStarts(slides);
 
-function getCategory(title) {
+function getCategory(title, category) {
+  if (category) return category;
+  if (/インターン/.test(title)) return 'intern';
   if (/ハッカソン|開発|アプリ|SNS|オーダー/.test(title)) return 'dev';
   if (/旅行|合宿|年越し|スノーボード|海外|ベトナム/.test(title)) return 'trip';
   if (/委員|メンター|実行委員|成人|幹事/.test(title)) return 'org';
   return 'event';
 }
 
-const CATEGORY_LABEL = { dev: '開発', trip: '旅行', org: '委員・活動', event: 'その他' };
+const CATEGORY_LABEL = { dev: '開発', intern: 'インターン', trip: '旅行', org: '委員・活動', event: 'その他' };
 
 const COL_W = 200;
 
@@ -107,7 +109,7 @@ export default function Timeline() {
   const onMouseUp = () => { drag.current = null; };
 
   const cur    = slides[active];
-  const cat    = getCategory(cur.title);
+  const cat    = getCategory(cur.title, cur.category);
   const totalW = halfW > 0 ? COL_W * slides.length + halfW * 2 : 0;
 
   return (
@@ -178,7 +180,7 @@ export default function Timeline() {
             </div>
 
             {slides.map((s, i) => {
-              const c        = getCategory(s.title);
+              const c        = getCategory(s.title, s.category);
               const up       = i % 2 === 0;
               const cx       = i * COL_W + halfW + COL_W / 2;
               const isActive = i === active;
