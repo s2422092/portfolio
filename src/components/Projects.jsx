@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { projects } from '../data/profile';
 import CountUp from './CountUp';
+import ShotShowcase from './ShotShowcase';
 import './Projects.css';
 
 const MAIN_ID = 2;
@@ -42,6 +43,7 @@ function MainProject({ main }) {
             <div className="proj-main__label">
               <span className="proj-featured-badge"><span className="live-dot" />Main Project · 稼働中</span>
               <span className="proj-main__meta">{main.event} · {main.period}</span>
+              <span className="proj-main__role">担当：{main.role}</span>
             </div>
 
             <div className="proj-main__body">
@@ -76,34 +78,25 @@ function MainProject({ main }) {
                   </a>
                   {main.demo && (
                     <a href={main.demo} target="_blank" rel="noopener noreferrer" className="proj-link-demo">
-                      <ExternalIcon /> Demo サイトを見る
+                      <ExternalIcon /> Demo
                     </a>
                   )}
                 </div>
               </div>
 
-              <div className="proj-main__side">
-                {main.screenshot && (
-                  <a
+              {main.screenshot && (
+                <div className="proj-main__visual">
+                  <ShotShowcase
+                    src={main.screenshot}
                     href={main.demo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="browser-frame proj-main__shot"
-                  >
-                    <div className="browser-frame__bar" aria-hidden="true"><i /><i /><i /></div>
-                    <img src={main.screenshot} alt="Hirolia のホームページ" width="1600" height="917" loading="lazy" />
-                  </a>
-                )}
-                <div className="proj-main__role-card">
-                  <span className="proj-main__role-label">担当</span>
-                  <span className="proj-main__role-value">{main.role}</span>
+                    alt="Hirolia のホームページ"
+                    chips={[
+                      { text: '4店舗で稼働中', dot: true },
+                      { text: '日本語 / English / नेपाली' },
+                    ]}
+                  />
                 </div>
-                <div className="proj-main__highlight">
-                  <p>4店舗で実運用中（1日約45件の注文）</p>
-                  <p>個人店舗向けモバイルオーダーの課題を解決</p>
-                  <p>多言語対応：日本語、英語、ネパール語</p>
-                </div>
-              </div>
+              )}
             </div>
           </article>
         )}

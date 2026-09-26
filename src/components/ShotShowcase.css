@@ -1,0 +1,123 @@
+/* ── 立体スクリーンショット ── */
+.shot {
+  --ry: -9deg;
+  --rx: 4deg;
+  --gx: 30%;
+  --gy: 20%;
+  --brand-green: 132, 186, 60; /* Hirolia のブランドカラー */
+  position: relative;
+  perspective: 1400px;
+  padding: 18px 10px 26px;
+}
+
+/* 背後の光 */
+.shot__glow {
+  position: absolute;
+  inset: 8% 4% 0;
+  border-radius: 40%;
+  background:
+    radial-gradient(closest-side, rgba(var(--brand-green), 0.45), transparent),
+    radial-gradient(closest-side at 80% 70%, rgba(var(--accent-rgb), 0.3), transparent);
+  filter: blur(30px);
+  z-index: 0;
+  animation: shot-breathe 6s ease-in-out infinite;
+}
+
+@keyframes shot-breathe {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.05); }
+}
+
+.shot__frame {
+  position: relative;
+  z-index: 1;
+  transform: rotateY(var(--ry)) rotateX(var(--rx));
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.5s;
+  box-shadow:
+    0 40px 80px -30px rgba(15, 23, 42, 0.45),
+    0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+/* 光沢：マウス位置に合わせて反射が動く */
+.shot__shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--gx) var(--gy), rgba(255, 255, 255, 0.28), transparent 45%);
+  mix-blend-mode: soft-light;
+}
+
+a.shot__frame:hover {
+  transform: rotateY(var(--ry)) rotateX(var(--rx)) translateZ(20px);
+  box-shadow:
+    0 50px 90px -30px rgba(var(--brand-green), 0.55),
+    0 0 0 1px rgba(var(--brand-green), 0.25);
+}
+
+/* 浮かぶラベル */
+.shot__chip {
+  position: absolute;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 7px 14px;
+  box-shadow: 0 12px 28px -12px rgba(15, 23, 42, 0.35);
+  white-space: nowrap;
+  animation: chip-float 5s ease-in-out infinite;
+}
+
+.shot__chip--0 { top: 2px; left: -6px; }
+.shot__chip--1 { bottom: 8px; right: -4px; animation-delay: -2.5s; }
+.shot__chip--2 { top: 42%; right: -14px; animation-delay: -1.2s; }
+
+@keyframes chip-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+/* 大きいサイズ（ケーススタディ用） */
+.shot--lg {
+  --ry: -4deg;
+  --rx: 3deg;
+  padding: 24px 16px 36px;
+}
+
+.shot--lg .shot__chip {
+  font-size: 0.88rem;
+  padding: 9px 18px;
+}
+
+.shot--lg .shot__chip--0 { top: 0; left: 0; }
+.shot--lg .shot__chip--1 { bottom: 10px; right: 0; }
+.shot--lg .shot__chip--2 { top: 45%; right: -10px; }
+
+@media (max-width: 768px) {
+  .shot,
+  .shot--lg {
+    --ry: 0deg;
+    --rx: 0deg;
+    padding: 14px 0 22px;
+  }
+  .shot__chip,
+  .shot--lg .shot__chip { font-size: 0.7rem; padding: 5px 11px; }
+  .shot__chip--2 { display: none; }
+  .shot__chip--0,
+  .shot--lg .shot__chip--0 { left: -4px; }
+  .shot__chip--1,
+  .shot--lg .shot__chip--1 { right: -4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shot__glow,
+  .shot__chip { animation: none; }
+}

@@ -1,5 +1,6 @@
 import { hiroliaCase as c } from '../data/caseStudy';
 import CountUp from './CountUp';
+import ShotShowcase from './ShotShowcase';
 import './CaseStudy.css';
 
 const sections = [
@@ -71,13 +72,18 @@ export default function CaseStudy() {
           </div>
 
           <figure className="cs-shot reveal">
-            <a href={c.demo} target="_blank" rel="noopener noreferrer" className="browser-frame">
-              <div className="browser-frame__bar" aria-hidden="true">
-                <i /><i /><i />
-                <span className="browser-frame__url">{c.demo.replace(/^https?:\/\//, '')}</span>
-              </div>
-              <img src={c.screenshot} alt="Hirolia のホームページ" width="1600" height="917" loading="lazy" />
-            </a>
+            <ShotShowcase
+              size="lg"
+              src={c.screenshot}
+              href={c.demo}
+              url={c.demo.replace(/^https?:\/\//, '')}
+              alt="Hirolia のホームページ"
+              chips={[
+                { text: '4店舗で稼働中', dot: true },
+                { text: '日本語 / English / नेपाली' },
+                { text: '累計 5,000件の注文' },
+              ]}
+            />
             <figcaption>自分が制作したサービスのホームページ（クリックで実際のサイトを開きます）</figcaption>
           </figure>
         </div>

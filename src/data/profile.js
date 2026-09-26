@@ -103,7 +103,7 @@ export const projects = [
     role: 'フルスタックエンジニア',
     stats: [
       { value: '9ヶ月', label: '継続開発' },
-      { value: '5,000件', label: '実注文数（運用6ヶ月）' },
+      { value: '5,000件', label: '実注文数（6ヶ月）' },
       { value: '4店舗', label: '稼働中' },
       { value: '約45件', label: '1日の注文数' },
     ],
