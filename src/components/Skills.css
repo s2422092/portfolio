@@ -5,77 +5,196 @@
 .skills-intro {
   color: var(--text-muted);
   font-size: 0.95rem;
-  margin-bottom: 40px;
+  margin-bottom: 28px;
   max-width: 600px;
 }
 
-/* グループカード群 */
-.skill-groups {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-.skill-group {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 20px 22px;
-}
-
-.skill-group__header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.skill-group__icon {
-  font-size: 1.2rem;
-  line-height: 1;
-  color: var(--accent);
-}
-
-.skill-group__title {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text);
-}
-
-/* タグ */
-.skill-group__tags {
+/* ── カテゴリフィルター ── */
+.skill-filters {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin-bottom: 20px;
 }
 
-.skill-tag {
+.skill-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
   background: var(--bg-solid);
   border: 1px solid var(--border);
-  color: var(--text-muted);
-  padding: 5px 12px;
-  border-radius: 8px;
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s;
 }
 
-.skill-tag:hover {
-  background: rgba(var(--accent-rgb), 0.08);
-  border-color: rgba(var(--accent-rgb), 0.4);
+.skill-filter:hover {
   color: var(--text);
-  box-shadow: 0 0 12px -2px rgba(var(--accent-rgb), 0.4);
+  border-color: var(--border-strong);
+}
+
+.skill-filter.is-active {
+  color: #fff;
+  background: var(--grad);
+  border-color: transparent;
+  box-shadow: 0 6px 18px -8px rgba(var(--accent-rgb), 0.7);
+}
+
+.skill-filter__icon {
+  font-size: 1rem;
+}
+
+.skill-filter__count {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+/* ── ステージ（アイコンが浮かぶ空間） ── */
+.skill-stage {
+  --px: 0;
+  --py: 0;
+  position: relative;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(ellipse 60% 70% at 50% 45%, rgba(var(--accent-rgb), 0.07), transparent 70%),
+    radial-gradient(circle, rgba(15, 23, 42, 0.12) 1px, transparent 1.5px) 0 0 / 22px 22px,
+    var(--bg-solid);
+  padding: 48px 32px 40px;
+  overflow: hidden;
+  box-shadow: inset 0 0 60px rgba(var(--primary-rgb), 0.05);
+}
+
+/* 外周をやわらかくフェードさせ、空間の奥行き感を出す */
+.skill-stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 0 40px 10px var(--bg-solid);
+}
+
+.skill-orbs {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 34px 12px;
+  position: relative;
+  z-index: 1;
+}
+
+/* セル：ばらつき + マウス追従（奥行きが深いほど大きく動く） */
+.orb-cell {
+  display: flex;
+  justify-content: center;
+  transform:
+    translate(
+      calc(var(--ox) + var(--px) * (var(--depth) + 1) * 9px),
+      calc(var(--oy) + var(--py) * (var(--depth) + 1) * 9px)
+    )
+    scale(calc(0.9 + var(--depth) * 0.08));
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.35s, filter 0.35s;
+}
+
+.orb-cell.is-dim {
+  opacity: 0.18;
+  filter: grayscale(1) blur(1px);
+}
+
+.orb-cell.is-hit {
+  z-index: 2;
+}
+
+/* ふわふわ浮遊 */
+.orb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: orb-float var(--float-dur) ease-in-out var(--float-delay) infinite;
+}
+
+@keyframes orb-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+.orb__tile {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--brand) 7%, #ffffff);
+  border: 1px solid color-mix(in srgb, var(--brand) 22%, transparent);
+  box-shadow:
+    0 10px 24px -10px color-mix(in srgb, var(--brand) 55%, transparent),
+    0 2px 4px rgba(15, 23, 42, 0.05);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.orb__svg {
+  width: 30px;
+  height: 30px;
+}
+
+.orb__mono {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.orb__mono--lg {
+  font-size: 1.6rem;
+}
+
+.orb__name {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: color 0.25s;
+}
+
+.orb:hover .orb__tile,
+.orb-cell.is-hit .orb__tile {
+  transform: translateY(-4px) scale(1.08);
+  box-shadow:
+    0 16px 32px -10px color-mix(in srgb, var(--brand) 70%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--brand) 12%, transparent);
+}
+
+.orb:hover .orb__name,
+.orb-cell.is-hit .orb__name {
+  color: var(--text);
 }
 
 @media (max-width: 900px) {
-  .skill-groups {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .skill-orbs { grid-template-columns: repeat(5, 1fr); }
 }
 
 @media (max-width: 560px) {
-  .skill-groups {
-    grid-template-columns: 1fr;
+  .skill-stage { padding: 32px 12px 28px; border-radius: 18px; }
+  .skill-orbs { grid-template-columns: repeat(4, 1fr); gap: 26px 4px; }
+  .orb-cell {
+    /* スマホではばらつきを控えめにして重なりを防ぐ */
+    transform: translate(calc(var(--ox) * 0.3), calc(var(--oy) * 0.4)) scale(calc(0.9 + var(--depth) * 0.05));
   }
+  .orb__tile { width: 52px; height: 52px; border-radius: 14px; }
+  .orb__svg { width: 24px; height: 24px; }
+  .orb__name { font-size: 0.6rem; }
+  .skill-filter { font-size: 0.75rem; padding: 5px 11px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb { animation: none; }
 }
