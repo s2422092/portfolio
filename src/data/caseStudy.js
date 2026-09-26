@@ -7,6 +7,7 @@ export const hiroliaCase = {
   period: '2025年12月〜 継続開発中',
   github: 'https://github.com/s2422092/hirolia',
   demo: 'https://hirolia-order.com/',
+  screenshot: '/hirolia-home.jpg',
 
   stats: [
     { value: '9ヶ月', label: '継続開発' },

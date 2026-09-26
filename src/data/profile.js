@@ -99,6 +99,7 @@ export const projects = [
     github: 'https://github.com/s2422092/hirolia',
     demo: 'https://hirolia-order.com/',
     caseStudy: '#/works/hirolia',
+    screenshot: '/hirolia-home.jpg',
     role: 'フルスタックエンジニア',
     stats: [
       { value: '9ヶ月', label: '継続開発' },

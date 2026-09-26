@@ -207,6 +207,63 @@ section {
   font-weight: 500;
 }
 
+/* ── ブラウザ風フレーム（スクリーンショット表示用） ── */
+.browser-frame {
+  display: block;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-solid);
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 24px 60px -24px rgba(15, 23, 42, 0.35);
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+a.browser-frame:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 30px 70px -24px rgba(var(--accent-rgb), 0.45);
+  text-decoration: none;
+}
+
+.browser-frame__bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: var(--bg-card2);
+  border-bottom: 1px solid var(--border);
+}
+
+.browser-frame__bar i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #f87171;
+}
+
+.browser-frame__bar i:nth-child(2) { background: #fbbf24; }
+.browser-frame__bar i:nth-child(3) { background: #34d399; }
+
+.browser-frame__url {
+  flex: 1;
+  margin-left: 8px;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  background: var(--bg-solid);
+  border-radius: 6px;
+  padding: 2px 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.browser-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 /* ── スクロールで出現 ── */
 .reveal {
   opacity: 0;
@@ -282,6 +339,9 @@ section {
     main .orb__tile {
       width: 54px;
       height: 54px;
+    }
+    main .proj-main {
+      padding: 24px 32px;
     }
     main .timeline-section {
       --axis-top: 150px;

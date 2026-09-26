@@ -93,7 +93,7 @@
 
 .proj-main__body {
   display: grid;
-  grid-template-columns: 1fr 220px;
+  grid-template-columns: 1fr 250px;
   gap: 36px;
   align-items: start;
 }
@@ -227,6 +227,19 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.proj-main__shot {
+  box-shadow: 0 14px 30px -16px rgba(15, 23, 42, 0.35);
+}
+
+.proj-main__shot .browser-frame__bar {
+  padding: 5px 8px;
+}
+
+.proj-main__shot .browser-frame__bar i {
+  width: 6px;
+  height: 6px;
 }
 
 .proj-main__role-card {
@@ -468,6 +481,7 @@
   .proj-main__side { flex-direction: row; flex-wrap: wrap; }
   .proj-main__role-card,
   .proj-main__highlight { flex: 1; min-width: 140px; }
+  .proj-main__shot { flex-basis: 100%; }
   .project-card { flex-basis: 82%; }
   .projects-rail { margin-right: calc((100% - 100vw) / 2); } /* ドットナビが無いので端まで */
   .proj-other-heading { font-size: 1.25rem; }

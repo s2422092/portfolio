@@ -69,6 +69,17 @@ export default function CaseStudy() {
             </a>
             <a href={c.github} target="_blank" rel="noopener noreferrer" className="btn-outline">GitHub</a>
           </div>
+
+          <figure className="cs-shot reveal">
+            <a href={c.demo} target="_blank" rel="noopener noreferrer" className="browser-frame">
+              <div className="browser-frame__bar" aria-hidden="true">
+                <i /><i /><i />
+                <span className="browser-frame__url">{c.demo.replace(/^https?:\/\//, '')}</span>
+              </div>
+              <img src={c.screenshot} alt="Hirolia のホームページ" width="1600" height="917" loading="lazy" />
+            </a>
+            <figcaption>自分が制作したサービスのホームページ（クリックで実際のサイトを開きます）</figcaption>
+          </figure>
         </div>
       </section>
 

@@ -83,6 +83,17 @@ function MainProject({ main }) {
               </div>
 
               <div className="proj-main__side">
+                {main.screenshot && (
+                  <a
+                    href={main.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="browser-frame proj-main__shot"
+                  >
+                    <div className="browser-frame__bar" aria-hidden="true"><i /><i /><i /></div>
+                    <img src={main.screenshot} alt="Hirolia のホームページ" width="1600" height="917" loading="lazy" />
+                  </a>
+                )}
                 <div className="proj-main__role-card">
                   <span className="proj-main__role-label">担当</span>
                   <span className="proj-main__role-value">{main.role}</span>
