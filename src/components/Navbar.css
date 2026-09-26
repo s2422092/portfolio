@@ -21,9 +21,21 @@
 
 .navbar.scrolled::before { opacity: 0; }
 
+/* スクロール前はカバー写真の上にあるので白文字 */
+.navbar:not(.scrolled) .nav-logo,
+.navbar:not(.scrolled) .nav-links a { color: #fff; }
+.navbar:not(.scrolled) .nav-num,
+.navbar:not(.scrolled) .nav-logo__bracket { color: #67e8f9; }
+.navbar:not(.scrolled) .nav-links a:hover,
+.navbar:not(.scrolled) .nav-links a.is-current {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+.navbar:not(.scrolled) .hamburger span { background: #fff; }
+
 .navbar.scrolled {
   padding: 12px 0;
-  background: rgba(5, 7, 15, 0.7);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
   box-shadow: 0 1px 0 var(--border);
@@ -61,7 +73,7 @@
   display: inline-flex;
   align-items: baseline;
   gap: 6px;
-  color: #c3cde0;
+  color: var(--text-muted);
   font-size: 0.86rem;
   font-weight: 500;
   padding: 6px 12px;
@@ -80,7 +92,7 @@
 
 .nav-links a:hover {
   color: var(--text);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(15, 23, 42, 0.04);
 }
 
 .nav-links a.is-current {
@@ -122,7 +134,7 @@
     right: 0;
     flex-direction: column;
     gap: 0;
-    background: rgba(5, 7, 15, 0.95);
+    background: rgba(255, 255, 255, 0.97);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     max-height: 0;
@@ -130,12 +142,16 @@
     transition: max-height 0.3s;
   }
 
+  .navbar .nav-links .nav-num { color: var(--accent); }
+
   .nav-links.open {
     max-height: 320px;
     border-bottom: 1px solid var(--border);
   }
 
-  .nav-links li a {
+  .navbar .nav-links li a {
+    color: var(--text);
+    background: transparent;
     display: flex;
     padding: 14px 24px;
     border-radius: 0;

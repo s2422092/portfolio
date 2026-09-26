@@ -4,11 +4,11 @@
 ════════════════════════════════ */
 
 .timeline-section {
-  --c-dev:   #818cf8;
-  --c-trip:  #34d399;
-  --c-org:   #fbbf24;
-  --c-event: #22d3ee;
-  --c-intern: #f472b6;
+  --c-dev:   #6366f1;
+  --c-trip:  #059669;
+  --c-org:   #d97706;
+  --c-event: #0891b2;
+  --c-intern: #db2777;
 
   --axis-top:  170px;
   --lbl-h:     140px;
@@ -46,11 +46,11 @@
   border-radius: 20px;
   border: 1px solid currentColor;
 }
-.tl-leg--dev   { color: var(--c-dev);   background: rgba(129,140,248,.12); }
-.tl-leg--trip  { color: var(--c-trip);  background: rgba(52,211,153,.12);  }
-.tl-leg--org   { color: var(--c-org);   background: rgba(251,191,36,.12);  }
-.tl-leg--event { color: var(--c-event); background: rgba(34,211,238,.12);  }
-.tl-leg--intern { color: var(--c-intern); background: rgba(244,114,182,.12); }
+.tl-leg--dev    { color: var(--c-dev);    background: rgba(99,102,241,.08); }
+.tl-leg--trip   { color: var(--c-trip);   background: rgba(5,150,105,.08);  }
+.tl-leg--org    { color: var(--c-org);    background: rgba(217,119,6,.08);  }
+.tl-leg--event  { color: var(--c-event);  background: rgba(8,145,178,.08);  }
+.tl-leg--intern { color: var(--c-intern); background: rgba(219,39,119,.08); }
 
 /* ─── 詳細パネル ─── */
 .tl-panel {
@@ -235,7 +235,7 @@
 .tl-axis__fill {
   height: 100%;
   background: linear-gradient(90deg, var(--primary), var(--c-event));
-  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.8);
+  box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.5);
   transition: width 0.1s linear;
 }
 
@@ -296,7 +296,7 @@
 
 .tl-dot.is-active {
   transform: scale(2);
-  box-shadow: 0 0 0 3px rgba(255,255,255,0.08), 0 0 16px 2px rgba(var(--accent-rgb), 0.7);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.15), 0 0 12px 1px rgba(var(--accent-rgb), 0.45);
 }
 
 /* ─── ラベル ─── */
@@ -331,11 +331,11 @@
   border-radius: 20px;
 }
 /* 月ラベルをカテゴリ色で塗る */
-.tl-label__month--dev   { color: var(--c-dev);   background: rgba(129,140,248,.15); }
-.tl-label__month--trip  { color: var(--c-trip);  background: rgba(52,211,153,.15);  }
-.tl-label__month--org   { color: var(--c-org);   background: rgba(251,191,36,.15);  }
-.tl-label__month--event { color: var(--c-event); background: rgba(34,211,238,.15);  }
-.tl-label__month--intern { color: var(--c-intern); background: rgba(244,114,182,.15); }
+.tl-label__month--dev    { color: var(--c-dev);    background: linear-gradient(rgba(99,102,241,.1), rgba(99,102,241,.1)), #fff; }
+.tl-label__month--trip   { color: var(--c-trip);   background: linear-gradient(rgba(5,150,105,.1), rgba(5,150,105,.1)), #fff;  }
+.tl-label__month--org    { color: var(--c-org);    background: linear-gradient(rgba(217,119,6,.1), rgba(217,119,6,.1)), #fff;  }
+.tl-label__month--event  { color: var(--c-event);  background: linear-gradient(rgba(8,145,178,.1), rgba(8,145,178,.1)), #fff;  }
+.tl-label__month--intern { color: var(--c-intern); background: linear-gradient(rgba(219,39,119,.1), rgba(219,39,119,.1)), #fff; }
 
 .tl-label__name {
   font-size: 0.82rem;
@@ -343,7 +343,7 @@
   font-weight: 600;
   line-height: 1.4;
   /* 読みやすさのため背景をつける（縦線が透けないよう不透明に） */
-  background: rgba(10, 14, 26, 0.96);
+  background: rgba(255, 255, 255, 0.96);
   border: 1px solid var(--border);
   backdrop-filter: blur(4px);
   padding: 4px 8px;
@@ -360,9 +360,9 @@
 .tl-node.is-active .tl-label__name {
   color: var(--text);
   font-weight: 700;
-  background: rgba(15, 22, 40, 0.95);
-  border-color: rgba(var(--accent-rgb), 0.4);
-  box-shadow: 0 0 18px -4px rgba(var(--accent-rgb), 0.5);
+  background: #ffffff;
+  border-color: rgba(var(--accent-rgb), 0.45);
+  box-shadow: 0 6px 20px -8px rgba(var(--accent-rgb), 0.5);
 }
 
 /* ─── プログレスバー ─── */

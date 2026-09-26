@@ -7,23 +7,23 @@
 }
 
 :root {
-  --primary: #6366f1;
-  --primary-dark: #4f46e5;
-  --accent: #22d3ee;
-  --accent-rgb: 34, 211, 238;
-  --primary-rgb: 99, 102, 241;
-  --bg: #05070f;
-  --bg-solid: #0a0e1a;
-  --bg-card: rgba(17, 24, 39, 0.55);
-  --bg-card2: rgba(30, 41, 59, 0.6);
-  --text: #e6edf7;
-  --text-muted: #8b98b0;
-  --border: rgba(148, 163, 184, 0.14);
-  --border-strong: rgba(148, 163, 184, 0.28);
+  --primary: #4f46e5;
+  --primary-dark: #4338ca;
+  --accent: #0891b2;
+  --accent-rgb: 8, 145, 178;
+  --primary-rgb: 79, 70, 229;
+  --bg: #f7f9fc;
+  --bg-solid: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.8);
+  --bg-card2: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #5b6678;
+  --border: rgba(15, 23, 42, 0.1);
+  --border-strong: rgba(15, 23, 42, 0.18);
   --radius: 14px;
   --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --grad: linear-gradient(135deg, var(--primary), var(--accent));
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 html {
@@ -41,8 +41,8 @@ body {
 }
 
 ::selection {
-  background: rgba(var(--accent-rgb), 0.3);
-  color: #fff;
+  background: rgba(var(--accent-rgb), 0.2);
+  color: var(--text);
 }
 
 /* ── 背景：グリッド + 浮遊するグロー ── */
@@ -58,8 +58,8 @@ body {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+    linear-gradient(rgba(15, 23, 42, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.045) 1px, transparent 1px);
   background-size: 56px 56px;
   mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 30%, transparent 100%);
   -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 30%, transparent 100%);
@@ -69,7 +69,7 @@ body {
   position: absolute;
   border-radius: 50%;
   filter: blur(90px);
-  opacity: 0.35;
+  opacity: 0.14;
   animation: orb-float 22s ease-in-out infinite alternate;
 }
 
@@ -87,7 +87,7 @@ body {
   top: 40%;
   right: -160px;
   background: var(--accent);
-  opacity: 0.18;
+  opacity: 0.1;
   animation-delay: -8s;
 }
 
@@ -107,7 +107,7 @@ body {
   transform-origin: 0 50%;
   transform: scaleX(0);
   z-index: 200;
-  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.7);
+  box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.5);
 }
 
 a {
@@ -159,7 +159,7 @@ section {
   background: var(--grad);
   border-radius: 2px;
   margin-top: 12px;
-  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.6);
+  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.35);
 }
 
 /* ── ガラスカード + マウス追従スポットライト ── */
@@ -171,6 +171,7 @@ section {
   position: relative;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 16px -8px rgba(15, 23, 42, 0.08);
   transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
   isolation: isolate;
 }
@@ -182,7 +183,7 @@ section {
   border-radius: inherit;
   background: radial-gradient(
     400px circle at var(--mx, -500px) var(--my, -500px),
-    rgba(var(--accent-rgb), 0.09),
+    rgba(var(--accent-rgb), 0.07),
     transparent 45%
   );
   pointer-events: none;
@@ -191,14 +192,14 @@ section {
 
 .card:hover {
   border-color: rgba(var(--accent-rgb), 0.35);
-  box-shadow: 0 10px 40px -12px rgba(var(--accent-rgb), 0.25);
+  box-shadow: 0 12px 36px -14px rgba(var(--accent-rgb), 0.35);
 }
 
 .tag {
   display: inline-block;
-  background: rgba(var(--primary-rgb), 0.1);
-  color: #c7d2fe;
-  border: 1px solid rgba(var(--primary-rgb), 0.28);
+  background: rgba(var(--primary-rgb), 0.06);
+  color: var(--primary-dark);
+  border: 1px solid rgba(var(--primary-rgb), 0.2);
   border-radius: 6px;
   padding: 2px 10px;
   font-family: var(--mono);
