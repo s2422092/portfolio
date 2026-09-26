@@ -118,7 +118,7 @@ export default function Timeline() {
         <div className="tl-header reveal">
           <div>
             <h2 className="section-title" data-index="04">Timeline</h2>
-            <p className="tl-sub">← 過去 &nbsp;｜&nbsp; 最新 →　　出来事をクリックで詳細表示</p>
+            <p className="tl-sub">← 過去 &nbsp;｜&nbsp; 最新 → &nbsp;&nbsp; 出来事をクリックで詳細表示</p>
           </div>
           <div className="tl-legend">
             {Object.entries(CATEGORY_LABEL).map(([k, l]) => (

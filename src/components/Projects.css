@@ -14,7 +14,6 @@
   border: 1px solid transparent;
   border-radius: 20px;
   padding: 32px 36px;
-  margin-bottom: 64px;
   position: relative;
   overflow: hidden;
   isolation: isolate;
@@ -264,40 +263,83 @@
 /* ══════════════════════════════
    Other Projects
 ══════════════════════════════ */
-.proj-other-heading {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  margin-bottom: 20px;
+.proj-other-head {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
+  margin-bottom: 20px;
 }
 
-.proj-other-heading::after {
-  content: '';
+.proj-other-heading {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
   flex: 1;
-  height: 1px;
-  background: var(--border);
 }
 
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+.proj-other-count {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.proj-other-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.proj-other-nav button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-solid);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.proj-other-nav button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 6px 16px -8px rgba(var(--accent-rgb), 0.6);
+}
+
+/* 横スライドのカード列 */
+.projects-rail {
+  display: flex;
   gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 2px;
+  padding: 6px 2px 18px;
+  align-items: flex-start;
+  /* 右端を画面の端まで伸ばし、次のカードをのぞかせてスライドできると分かるようにする */
+  margin-right: calc((100% - 100vw) / 2 + 56px); /* 右端のドットナビとは重ねない */
+  padding-right: 24px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--accent-rgb), 0.4) transparent;
 }
 
 .project-card {
+  flex: 0 0 340px;
+  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .project-top {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
+  gap: 6px;
 }
 
 .project-event {
@@ -306,7 +348,6 @@
   color: var(--accent);
   font-weight: 500;
   display: block;
-  margin-bottom: 4px;
 }
 
 .project-title {
@@ -330,8 +371,31 @@
   color: var(--text-muted);
   font-size: 0.85rem;
   line-height: 1.6;
-  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
+
+.project-desc.is-open {
+  -webkit-line-clamp: unset;
+  display: block;
+}
+
+.project-more {
+  align-self: flex-start;
+  font: inherit;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: -4px;
+  cursor: pointer;
+}
+
+.project-more:hover { text-decoration: underline; }
 
 .project-tech {
   display: flex;
@@ -384,5 +448,12 @@
   .proj-main__side { flex-direction: row; flex-wrap: wrap; }
   .proj-main__role-card,
   .proj-main__highlight { flex: 1; min-width: 140px; }
-  .projects-grid { grid-template-columns: 1fr; }
+  .project-card { flex-basis: 82%; }
+  .projects-rail { margin-right: calc((100% - 100vw) / 2); } /* ドットナビが無いので端まで */
+  .proj-other-heading { font-size: 1.25rem; }
+}
+
+/* 画面端まで伸ばしたカード列がスクロールバー幅ぶんはみ出さないよう切り取る */
+.projects-other {
+  overflow-x: clip;
 }

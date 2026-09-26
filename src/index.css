@@ -236,6 +236,59 @@ section {
     justify-content: center;
   }
 
+  /* 1画面に収めるため、見出しまわりの余白を詰める */
+  main > section:not(.hero) {
+    padding: 84px 0 40px;
+  }
+
+  main .section-title {
+    margin-bottom: 28px;
+  }
+
+  /* タイムラインの写真は画面からはみ出さない高さに */
+  .tl-photo-img {
+    max-height: 24vh;
+  }
+
+  /* 高さの低いノートPC（〜850px）ではさらに詰める */
+  @media (max-height: 850px) {
+    main > section:not(.hero) {
+      padding: 72px 0 24px;
+    }
+    main .section-title {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+    .section-title[data-index]::before {
+      margin-bottom: 4px;
+    }
+    .section-title::after {
+      margin-top: 8px;
+    }
+    /* 各コンポーネントの CSS より後勝ちさせるため main から指定する */
+    main .skills-intro,
+    main .projects-intro {
+      margin-bottom: 16px;
+    }
+    main .skill-stage {
+      padding: 18px;
+    }
+    main .skill-zone__head {
+      margin-bottom: 8px;
+    }
+    main .skill-orbs {
+      gap: 12px 12px;
+    }
+    main .orb__tile {
+      width: 54px;
+      height: 54px;
+    }
+    main .timeline-section {
+      --axis-top: 150px;
+      --lbl-h: 120px;
+    }
+  }
+
   /* flex 内だと margin: auto のコンテナが中身の幅に縮むので、幅を明示する */
   main > section > .container {
     width: 100%;

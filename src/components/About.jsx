@@ -19,21 +19,20 @@ export default function About() {
             </table>
           </div>
 
-          <div className="about-cards">
-            <div className="card strength-card reveal">
-              <div className="card-header">
-                <span className="material-icons card-icon">thumb_up</span>
-                <h3>長所</h3>
-              </div>
-              <p>{profile.strengths}</p>
+          <div className="card strength-card reveal">
+            <div className="card-header">
+              <span className="material-icons card-icon">thumb_up</span>
+              <h3>長所</h3>
             </div>
-            <div className="card weakness-card reveal" style={{ '--reveal-delay': '0.1s' }}>
-              <div className="card-header">
-                <span className="material-icons card-icon">build</span>
-                <h3>短所・改善</h3>
-              </div>
-              <p>{profile.weakness}</p>
+            <p>{profile.strengths}</p>
+          </div>
+
+          <div className="card weakness-card reveal" style={{ '--reveal-delay': '0.1s' }}>
+            <div className="card-header">
+              <span className="material-icons card-icon">build</span>
+              <h3>短所・改善</h3>
             </div>
+            <p>{profile.weakness}</p>
           </div>
 
           <div className="about-activities card reveal">

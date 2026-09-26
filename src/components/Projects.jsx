@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import { projects } from '../data/profile';
 import CountUp from './CountUp';
 import './Projects.css';
@@ -20,6 +21,15 @@ export default function Projects() {
   const main  = projects.find((p) => p.id === MAIN_ID);
   const others = projects.filter((p) => p.id !== MAIN_ID);
 
+  return (
+    <>
+      <MainProject main={main} />
+      <OtherProjects items={others} />
+    </>
+  );
+}
+
+function MainProject({ main }) {
   return (
     <section id="projects">
       <div className="container">
@@ -82,38 +92,74 @@ export default function Projects() {
           </article>
         )}
 
-        {/* ── その他プロジェクト ── */}
-        <h3 className="proj-other-heading reveal">Other Projects</h3>
-        <div className="projects-grid">
-          {others.map((p, i) => (
-            <article
-              key={p.id}
-              className="card project-card reveal"
-              style={{ '--reveal-delay': `${(i % 2) * 0.08}s` }}
-            >
-              <div className="project-top">
-                <div>
+      </div>
+    </section>
+  );
+}
+
+function OtherProjects({ items }) {
+  const railRef = useRef(null);
+  const [expanded, setExpanded] = useState({});
+
+  // カード1枚分ずつ横にスクロール
+  const slide = (dir) => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const card = rail.querySelector('.project-card');
+    rail.scrollBy({ left: dir * ((card?.offsetWidth ?? 320) + 20), behavior: 'smooth' });
+  };
+
+  return (
+    <section id="other-projects" className="projects-other">
+      <div className="container">
+        <div className="proj-other-head reveal">
+          <h3 className="proj-other-heading">
+            Other Projects <span className="proj-other-count">{items.length}</span>
+          </h3>
+          <div className="proj-other-nav">
+            <button type="button" onClick={() => slide(-1)} aria-label="前のプロジェクト">←</button>
+            <button type="button" onClick={() => slide(1)} aria-label="次のプロジェクト">→</button>
+          </div>
+        </div>
+
+        <div className="projects-rail reveal" ref={railRef}>
+          {items.map((p) => {
+            const open = expanded[p.id];
+            const long = p.description.length > 70; // 3行に収まらない説明だけ開閉ボタンを出す
+            return (
+              <article key={p.id} className="card project-card">
+                <div className="project-top">
                   <span className="project-event">{p.event} · {p.period}</span>
-                  <h3 className="project-title">{p.title}</h3>
+                  <span className="project-role">{p.role}</span>
                 </div>
-                <span className="project-role">{p.role}</span>
-              </div>
-              <p className="project-desc">{p.description}</p>
-              <div className="project-tech">
-                {p.tech.map((t) => <span key={t} className="tag">{t}</span>)}
-              </div>
-              <div className="project-links">
-                <a href={p.github} target="_blank" rel="noopener noreferrer" className="link-btn">
-                  <GithubIcon /> GitHub
-                </a>
-                {p.demo && (
-                  <a href={p.demo} target="_blank" rel="noopener noreferrer" className="link-btn link-demo">
-                    <ExternalIcon /> Demo
-                  </a>
+                <h3 className="project-title">{p.title}</h3>
+                <p className={`project-desc ${open ? 'is-open' : ''}`}>{p.description}</p>
+                {long && (
+                  <button
+                    type="button"
+                    className="project-more"
+                    onClick={() => setExpanded((e) => ({ ...e, [p.id]: !open }))}
+                    aria-expanded={Boolean(open)}
+                  >
+                    {open ? '閉じる' : '続きを読む'}
+                  </button>
                 )}
-              </div>
-            </article>
-          ))}
+                <div className="project-tech">
+                  {p.tech.map((t) => <span key={t} className="tag">{t}</span>)}
+                </div>
+                <div className="project-links">
+                  <a href={p.github} target="_blank" rel="noopener noreferrer" className="link-btn">
+                    <GithubIcon /> GitHub
+                  </a>
+                  {p.demo && (
+                    <a href={p.demo} target="_blank" rel="noopener noreferrer" className="link-btn link-demo">
+                      <ExternalIcon /> Demo
+                    </a>
+                  )}
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
