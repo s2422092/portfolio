@@ -4,11 +4,11 @@ export default function Contact() {
   return (
     <section id="contact" className="contact-section">
       <div className="container">
-        <h2 className="section-title">Contact</h2>
-        <p className="contact-intro">
+        <h2 className="section-title reveal" data-index="05">Contact</h2>
+        <p className="contact-intro reveal">
           お気軽にご連絡ください。インターンシップや就職に関するお問い合わせも歓迎です。
         </p>
-        <div className="contact-links">
+        <div className="contact-links reveal">
           <a
             href="https://github.com/s2422092"
             target="_blank"

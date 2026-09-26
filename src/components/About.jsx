@@ -5,9 +5,9 @@ export default function About() {
   return (
     <section id="about">
       <div className="container">
-        <h2 className="section-title">About Me</h2>
+        <h2 className="section-title reveal" data-index="01">About Me</h2>
         <div className="about-grid">
-          <div className="about-info card">
+          <div className="about-info card reveal">
             <h3>基本情報</h3>
             <table className="info-table">
               <tbody>
@@ -20,14 +20,14 @@ export default function About() {
           </div>
 
           <div className="about-cards">
-            <div className="card strength-card">
+            <div className="card strength-card reveal">
               <div className="card-header">
                 <span className="material-icons card-icon">thumb_up</span>
                 <h3>長所</h3>
               </div>
               <p>{profile.strengths}</p>
             </div>
-            <div className="card weakness-card">
+            <div className="card weakness-card reveal" style={{ '--reveal-delay': '0.1s' }}>
               <div className="card-header">
                 <span className="material-icons card-icon">build</span>
                 <h3>短所・改善</h3>
@@ -36,7 +36,7 @@ export default function About() {
             </div>
           </div>
 
-          <div className="about-activities card">
+          <div className="about-activities card reveal">
             <h3>活動・経験</h3>
             <ul className="activity-list">
               {profile.activities.map((a, i) => (
@@ -48,7 +48,7 @@ export default function About() {
             </ul>
           </div>
 
-          <div className="about-hobbies card">
+          <div className="about-hobbies card reveal">
             <h3>趣味</h3>
             <div className="hobby-list">
               {profile.hobbies.map((h, i) => (

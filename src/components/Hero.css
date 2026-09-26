@@ -1,29 +1,23 @@
 /* ════════════════════════════════
-   Hero — Notion style
+   Hero — tech style
 ════════════════════════════════ */
 
 .hero {
   position: relative;
-  padding-bottom: 64px;
+  padding: 0 0 48px;
 }
 
 /* ── カバーエリア ── */
 .hero-cover {
   width: 100%;
-  height: 340px;
-  background: linear-gradient(
-    135deg,
-    #1a2744 0%,
-    #0f2040 40%,
-    #0d1f3c 60%,
-    #0a1628 100%
-  );
+  height: 360px;
+  background: linear-gradient(135deg, #0b1230 0%, #081026 50%, #050914 100%);
   position: relative;
   overflow: hidden;
 }
 
 @media (max-width: 640px) {
-  .hero-cover { height: 220px; }
+  .hero-cover { height: 230px; }
 }
 
 .cover-img {
@@ -34,31 +28,55 @@
   object-fit: cover;
   object-position: center center;
   opacity: 0;
-  transition: opacity 0.8s ease;
+  transform: scale(1.06);
+  transition: opacity 1s ease, transform 6s ease-out;
+  filter: saturate(0.9) contrast(1.05);
 }
 
 .cover-img.loaded {
   opacity: 1;
+  transform: scale(1);
 }
 
 .cover-overlay {
   position: absolute;
   inset: 0;
-  /* 写真なし: 装飾グラデのみ */
   background:
-    radial-gradient(ellipse 70% 80% at 20% 50%, rgba(37, 99, 235, 0.3), transparent),
-    radial-gradient(ellipse 50% 60% at 80% 20%, rgba(6, 182, 212, 0.2), transparent);
-  transition: background 0.8s ease;
+    radial-gradient(ellipse 70% 80% at 20% 50%, rgba(var(--primary-rgb), 0.35), transparent),
+    radial-gradient(ellipse 50% 60% at 80% 20%, rgba(var(--accent-rgb), 0.25), transparent);
 }
 
-/* 写真あり: 下側を暗くしてプロフィールとなじませる */
+/* 写真あり：寒色グラデで染めつつ、下を背景色になじませる */
 .cover-overlay.with-photo {
-  background: linear-gradient(
-    to bottom,
-    rgba(10, 20, 40, 0.1) 0%,
-    rgba(10, 20, 40, 0.5) 70%,
-    rgba(15, 23, 42, 0.9) 100%
-  );
+  background:
+    linear-gradient(120deg, rgba(var(--primary-rgb), 0.25), rgba(var(--accent-rgb), 0.08) 60%, transparent),
+    linear-gradient(to bottom, rgba(5, 7, 15, 0.05) 0%, rgba(5, 7, 15, 0.45) 65%, var(--bg) 100%);
+}
+
+.cover-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+}
+
+/* 上から下へ流れるスキャンライン */
+.cover-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 120px;
+  top: -120px;
+  background: linear-gradient(to bottom, transparent, rgba(var(--accent-rgb), 0.12), transparent);
+  animation: scan 6s linear infinite;
+}
+
+@keyframes scan {
+  to { top: 100%; }
 }
 
 .cover-placeholder {
@@ -70,34 +88,49 @@
   font-size: 0.78rem;
   white-space: nowrap;
   pointer-events: none;
-  font-family: monospace;
+  font-family: var(--mono);
 }
 
-/* ── プロフィールラッパー ── */
-.hero-profile-wrap {
-  background: var(--bg);
-}
-
+/* ── プロフィール ── */
 .hero-profile {
   display: flex;
   align-items: flex-start;
-  gap: 32px;
-  padding-top: 0;
-  /* アバターがカバーに食い込む分だけ上にずらす */
-  margin-top: -56px;
+  gap: 36px;
+  margin-top: -70px;
+  position: relative;
 }
 
 /* ── アバター ── */
-.avatar-wrap {
+.avatar-ring {
   flex-shrink: 0;
-  width: 196px;
-  height: 196px;
+  width: 204px;
+  height: 204px;
+  border-radius: 50%;
+  padding: 3px;
+  position: relative;
+  background: conic-gradient(from var(--ring-angle, 0deg), var(--primary), var(--accent), transparent 60%, var(--primary));
+  animation: ring-spin 6s linear infinite;
+  box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.25);
+}
+
+@property --ring-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes ring-spin {
+  to { --ring-angle: 360deg; }
+}
+
+.avatar-wrap {
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   border: 4px solid var(--bg);
   overflow: hidden;
-  background: var(--bg-card);
+  background: var(--bg-solid);
   position: relative;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.5);
 }
 
 .avatar-img {
@@ -122,7 +155,7 @@
   justify-content: center;
   font-size: 2.5rem;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
+  background: var(--grad);
   color: white;
 }
 
@@ -130,62 +163,105 @@
   display: none;
 }
 
-/* ── テキストブロック ── */
+/* ── テキスト ── */
 .hero-text {
   flex: 1;
-  padding-top: 64px; /* アバターより下から始める */
+  padding-top: 84px;
+  min-width: 0;
 }
+
+.hero-prompt {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--text);
+  margin-bottom: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.hero-prompt__path { color: var(--primary); filter: brightness(1.4); }
+.hero-prompt__sign { color: var(--accent); }
 
 .hero-name-row {
   display: flex;
   align-items: baseline;
-  gap: 14px;
+  gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .hero-name {
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.2;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  background: linear-gradient(180deg, #ffffff 30%, #9fb0cc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .hero-name-en {
-  font-size: 1rem;
+  font-family: var(--mono);
+  font-size: 0.95rem;
   color: var(--text-muted);
-  font-weight: 400;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .hero-tagline {
-  font-size: 1rem;
+  font-family: var(--mono);
+  font-size: 0.92rem;
   color: var(--accent);
   font-weight: 500;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  min-height: 1.7em;
+}
+
+.tw-caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.8);
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+  50% { opacity: 0; }
 }
 
 .hero-univ {
   font-size: 0.88rem;
   color: var(--text-muted);
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .hero-badges {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .badge {
-  background: rgba(37, 99, 235, 0.15);
-  border: 1px solid rgba(37, 99, 235, 0.35);
-  color: #93c5fd;
+  background: rgba(var(--primary-rgb), 0.1);
+  border: 1px solid rgba(var(--primary-rgb), 0.35);
+  color: #c7d2fe;
   padding: 4px 14px;
-  border-radius: 20px;
-  font-size: 0.8rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
   font-weight: 500;
+  opacity: 0;
+  animation: badge-in 0.5s ease forwards;
+}
+
+@keyframes badge-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
 }
 
 .hero-cta {
@@ -195,72 +271,98 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary), var(--accent));
+  position: relative;
+  background: var(--grad);
   color: #fff;
-  padding: 10px 28px;
-  border-radius: 8px;
+  padding: 11px 26px;
+  border-radius: 10px;
   font-weight: 600;
   font-size: 0.9rem;
   text-decoration: none;
-  transition: opacity 0.2s, transform 0.2s;
+  overflow: hidden;
+  box-shadow: 0 8px 28px -8px rgba(var(--accent-rgb), 0.6);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* ホバー時に光が横切る */
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
 }
 
 .btn-primary:hover {
-  opacity: 0.88;
   transform: translateY(-2px);
+  box-shadow: 0 12px 34px -8px rgba(var(--accent-rgb), 0.8);
   text-decoration: none;
 }
 
+.btn-primary:hover::after { transform: translateX(100%); }
+
 .btn-outline {
-  background: transparent;
+  background: rgba(255, 255, 255, 0.02);
   color: var(--text);
-  padding: 10px 28px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
+  padding: 11px 26px;
+  border-radius: 10px;
+  border: 1px solid var(--border-strong);
   font-weight: 600;
   font-size: 0.9rem;
   text-decoration: none;
-  transition: border-color 0.2s, transform 0.2s;
+  transition: border-color 0.2s, transform 0.2s, background 0.2s;
 }
 
 .btn-outline:hover {
   border-color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.06);
   transform: translateY(-2px);
   text-decoration: none;
 }
 
-/* ── スクロール矢印 ── */
+/* ── スクロール誘導 ── */
 .hero-scroll {
   display: flex;
-  justify-content: center;
-  margin-top: 32px;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 48px auto 0;
+  width: max-content;
+  text-decoration: none;
 }
 
-.hero-scroll span {
-  display: block;
-  width: 20px;
-  height: 32px;
-  border: 2px solid var(--border);
-  border-radius: 10px;
+.hero-scroll:hover { text-decoration: none; }
+
+.hero-scroll__label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.hero-scroll__line {
+  width: 1px;
+  height: 44px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
   position: relative;
+  overflow: hidden;
 }
 
-.hero-scroll span::after {
+.hero-scroll__line::after {
   content: '';
   position: absolute;
-  top: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 8px;
-  background: var(--accent);
-  border-radius: 2px;
-  animation: scroll-dot 1.8s ease-in-out infinite;
+  left: 0;
+  top: -40%;
+  width: 100%;
+  height: 40%;
+  background: #fff;
+  animation: scroll-line 1.8s ease-in-out infinite;
 }
 
-@keyframes scroll-dot {
-  0%  { opacity: 1; top: 4px; }
-  100%{ opacity: 0; top: 18px; }
+@keyframes scroll-line {
+  to { top: 100%; }
 }
 
 /* ── モバイル ── */
@@ -268,15 +370,17 @@
   .hero-profile {
     flex-direction: column;
     gap: 0;
-    margin-top: -40px;
+    margin-top: -52px;
   }
 
-  .avatar-wrap {
-    width: 147px;
-    height: 147px;
+  .avatar-ring {
+    width: 150px;
+    height: 150px;
   }
 
   .hero-text {
-    padding-top: 16px;
+    padding-top: 20px;
   }
+
+  .hero-tagline { font-size: 0.8rem; }
 }

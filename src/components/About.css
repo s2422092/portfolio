@@ -28,15 +28,21 @@
   vertical-align: top;
 }
 
+.info-table tr:last-child td { border-bottom: none; }
+
 .info-table td:first-child {
   color: var(--text-muted);
-  width: 100px;
+  width: 110px;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
   font-weight: 500;
 }
 
 .about-cards {
-  display: flex;
-  flex-direction: column;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 24px;
 }
 
@@ -53,8 +59,16 @@
 }
 
 .card-icon {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   color: var(--accent);
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(var(--accent-rgb), 0.1);
+  border: 1px solid rgba(var(--accent-rgb), 0.25);
 }
 
 .strength-card p,
@@ -86,7 +100,8 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.8);
   flex-shrink: 0;
 }
 
@@ -108,7 +123,8 @@
 }
 
 .hobby-item {
-  border-left: 2px solid var(--border);
+  border-left: 2px solid;
+  border-image: linear-gradient(to bottom, var(--accent), transparent) 1;
   padding-left: 14px;
 }
 
@@ -130,7 +146,11 @@
   .about-grid {
     grid-template-columns: 1fr;
   }
+  .about-cards {
+    grid-template-columns: 1fr;
+  }
   .about-info,
+  .about-cards,
   .about-activities,
   .about-hobbies {
     grid-column: 1;

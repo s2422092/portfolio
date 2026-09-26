@@ -1,5 +1,5 @@
 .skills-section {
-  background: var(--bg);
+  background: transparent;
 }
 
 .skills-intro {
@@ -38,7 +38,7 @@
 .skill-group__title {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--text);
 }
 
 /* タグ */
@@ -49,20 +49,23 @@
 }
 
 .skill-tag {
-  background: var(--bg-card2);
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border);
   color: var(--text-muted);
-  padding: 5px 14px;
-  border-radius: 4px;
-  font-size: 0.85rem;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 
 .skill-tag:hover {
-  background: #e5e4e0;
+  background: rgba(var(--accent-rgb), 0.08);
+  border-color: rgba(var(--accent-rgb), 0.4);
   color: var(--text);
+  box-shadow: 0 0 12px -2px rgba(var(--accent-rgb), 0.4);
 }
 
 @media (max-width: 900px) {

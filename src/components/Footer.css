@@ -12,13 +12,15 @@
 }
 
 .footer-logo {
+  font-family: var(--mono);
   font-weight: 700;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
+  background: var(--grad);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .footer-copy {
+  font-family: var(--mono);
+  font-size: 0.78rem;
   color: var(--text-muted);
-  font-size: 0.85rem;
 }

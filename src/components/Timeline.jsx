@@ -115,9 +115,9 @@ export default function Timeline() {
   return (
     <section id="timeline" className="timeline-section">
       <div className="container">
-        <div className="tl-header">
+        <div className="tl-header reveal">
           <div>
-            <h2 className="section-title">Timeline</h2>
+            <h2 className="section-title" data-index="04">Timeline</h2>
             <p className="tl-sub">← 過去 &nbsp;｜&nbsp; 最新 →　　出来事をクリックで詳細表示</p>
           </div>
           <div className="tl-legend">
@@ -193,7 +193,7 @@ export default function Timeline() {
                   {up && (
                     <div className="tl-label tl-label--up">
                       <span className={`tl-label__month tl-label__month--${c}`}>{s.month}</span>
-                      <span className="tl-label__name">{s.title}</span>
+                      <span className="tl-label__name"><span className="tl-label__text">{s.title}</span></span>
                     </div>
                   )}
 
@@ -208,7 +208,7 @@ export default function Timeline() {
                   {!up && (
                     <div className="tl-label tl-label--dn">
                       <span className={`tl-label__month tl-label__month--${c}`}>{s.month}</span>
-                      <span className="tl-label__name">{s.title}</span>
+                      <span className="tl-label__name"><span className="tl-label__text">{s.title}</span></span>
                     </div>
                   )}
                 </div>

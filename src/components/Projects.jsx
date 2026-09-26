@@ -1,4 +1,5 @@
 import { projects } from '../data/profile';
+import CountUp from './CountUp';
 import './Projects.css';
 
 const MAIN_ID = 2;
@@ -22,14 +23,14 @@ export default function Projects() {
   return (
     <section id="projects">
       <div className="container">
-        <h2 className="section-title">Projects</h2>
-        <p className="projects-intro">ハッカソンや個人開発で作成したプロジェクトです。</p>
+        <h2 className="section-title reveal" data-index="03">Projects</h2>
+        <p className="projects-intro reveal">ハッカソンや個人開発で作成したプロジェクトです。</p>
 
         {/* ── メインプロジェクト ── */}
         {main && (
-          <article className="proj-main">
+          <article className="proj-main reveal">
             <div className="proj-main__label">
-              <span className="proj-featured-badge">Main Project</span>
+              <span className="proj-featured-badge"><span className="live-dot" />Main Project · 稼働中</span>
               <span className="proj-main__meta">{main.event} · {main.period}</span>
             </div>
 
@@ -40,7 +41,7 @@ export default function Projects() {
                   <div className="proj-main__stats">
                     {main.stats.map((st) => (
                       <div key={st.label} className="proj-main__stat">
-                        <span className="proj-main__stat-value">{st.value}</span>
+                        <span className="proj-main__stat-value"><CountUp value={st.value} /></span>
                         <span className="proj-main__stat-label">{st.label}</span>
                       </div>
                     ))}
@@ -82,10 +83,14 @@ export default function Projects() {
         )}
 
         {/* ── その他プロジェクト ── */}
-        <h3 className="proj-other-heading">Other Projects</h3>
+        <h3 className="proj-other-heading reveal">Other Projects</h3>
         <div className="projects-grid">
-          {others.map((p) => (
-            <article key={p.id} className="card project-card">
+          {others.map((p, i) => (
+            <article
+              key={p.id}
+              className="card project-card reveal"
+              style={{ '--reveal-delay': `${(i % 2) * 0.08}s` }}
+            >
               <div className="project-top">
                 <div>
                   <span className="project-event">{p.event} · {p.period}</span>

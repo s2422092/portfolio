@@ -32,14 +32,18 @@ export default function Skills() {
   return (
     <section id="skills" className="skills-section">
       <div className="container">
-        <h2 className="section-title">Skills</h2>
-        <p className="skills-intro">
+        <h2 className="section-title reveal" data-index="02">Skills</h2>
+        <p className="skills-intro reveal">
           ハッカソンや個人開発を通じて実際のプロジェクトで活用してきた技術です。
         </p>
 
         <div className="skill-groups">
-          {skillGroups.map((group) => (
-            <div key={group.category} className="skill-group card">
+          {skillGroups.map((group, i) => (
+            <div
+              key={group.category}
+              className="skill-group card reveal"
+              style={{ '--reveal-delay': `${i * 0.07}s` }}
+            >
               <div className="skill-group__header">
                 <span className="material-icons skill-group__icon">{group.icon}</span>
                 <h3 className="skill-group__title">{group.category}</h3>
