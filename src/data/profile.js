@@ -95,14 +95,16 @@ export const projects = [
     event: '第二回DS学部内ハッカソン',
     period: '2025年12月',
     description: 'このプロダクトは、インド料理レストラン向けの多店舗対応モバイルオーダーシステム。QRコードをスキャンするだけでスマホ上での注文が完結する。Flask + PostgreSQL で構築し、日本語・英語・ネパール語の3言語に対応。スタッフ画面ではリアルタイムで注文確認・調理管理が可能で、USBレシートプリンターへの自動印刷機能も備えている。',
-    tech: ['HTML', 'CSS', 'JavaScript', 'Flask', 'PostgreSQL'],
+    tech: ['HTML', 'CSS', 'JavaScript', 'Flask', 'PostgreSQL', 'Render'],
     github: 'https://github.com/s2422092/hirolia',
     demo: 'https://hirolia-order.com/',
-    role: '開発リード',
+    caseStudy: '#/works/hirolia',
+    role: 'フルスタックエンジニア',
     stats: [
       { value: '9ヶ月', label: '継続開発' },
       { value: '5,000件', label: '実注文数（運用6ヶ月）' },
       { value: '4店舗', label: '稼働中' },
+      { value: '約45件', label: '1日の注文数' },
     ],
   },
   {

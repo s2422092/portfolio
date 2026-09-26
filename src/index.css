@@ -223,7 +223,7 @@ section {
 /* ── パソコン：1セクション = 1画面、スクロールで次のセクションに吸着 ──
    画面より長いセクション（About / Projects など）は中を読み切ってから次へ進む */
 @media (min-width: 1024px) and (min-height: 640px) and (hover: hover) and (pointer: fine) {
-  html {
+  html:not(.no-snap) {
     scroll-snap-type: y mandatory;
   }
 

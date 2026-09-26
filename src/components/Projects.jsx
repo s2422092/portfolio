@@ -66,6 +66,11 @@ function MainProject({ main }) {
                 </div>
 
                 <div className="proj-main__links">
+                  {main.caseStudy && (
+                    <a href={main.caseStudy} className="proj-link-case">
+                      ケーススタディを読む <span aria-hidden="true">→</span>
+                    </a>
+                  )}
                   <a href={main.github} target="_blank" rel="noopener noreferrer" className="proj-link-gh">
                     <GithubIcon /> GitHub
                   </a>
@@ -83,7 +88,7 @@ function MainProject({ main }) {
                   <span className="proj-main__role-value">{main.role}</span>
                 </div>
                 <div className="proj-main__highlight">
-                  <p>4店舗で実運用中（累計5,000件の注文）</p>
+                  <p>4店舗で実運用中（1日約45件の注文）</p>
                   <p>個人店舗向けモバイルオーダーの課題を解決</p>
                   <p>多言語対応：日本語、英語、ネパール語</p>
                 </div>

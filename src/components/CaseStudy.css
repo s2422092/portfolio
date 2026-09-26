@@ -1,0 +1,654 @@
+/* ════════════════════════════════
+   Case Study — モバイルオーダー詳細ページ
+════════════════════════════════ */
+
+.cs {
+  min-height: 100vh;
+}
+
+/* ── 上部バー ── */
+.cs-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+}
+
+.cs-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.cs-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  padding: 6px 12px 6px 8px;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.cs-back:hover {
+  background: rgba(var(--accent-rgb), 0.08);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.cs-bar__label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+}
+
+/* ── ヒーロー ── */
+.cs-hero {
+  padding: 72px 0 56px;
+  border-bottom: 1px solid var(--border);
+  background:
+    radial-gradient(ellipse 60% 80% at 85% 0%, rgba(var(--accent-rgb), 0.08), transparent 70%),
+    radial-gradient(ellipse 50% 70% at 0% 100%, rgba(var(--primary-rgb), 0.06), transparent 70%);
+}
+
+.cs-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: #047857;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 999px;
+  padding: 4px 14px;
+  margin-bottom: 20px;
+}
+
+.cs-hero__title {
+  font-size: clamp(1.8rem, 4.2vw, 2.9rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin-bottom: 16px;
+}
+
+.cs-hero__lead {
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.cs-hero__overview {
+  color: var(--text-muted);
+  max-width: 720px;
+  margin-bottom: 36px;
+}
+
+.cs-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.cs-stat {
+  background: var(--bg-solid);
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  border-radius: 16px;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 10px 30px -18px rgba(var(--accent-rgb), 0.5);
+}
+
+.cs-stat__value,
+.cs-result__value {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  line-height: 1.1;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.cs-stat__value { font-size: clamp(1.5rem, 3vw, 2.1rem); }
+
+.cs-stat__label,
+.cs-result__label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.cs-hero__links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ── 本文レイアウト：左に目次、右に本文 ── */
+.cs-layout {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 56px;
+  padding-top: 56px;
+  padding-bottom: 96px;
+}
+
+.cs-toc {
+  position: sticky;
+  top: 88px;
+  align-self: start;
+}
+
+.cs-toc__title {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.cs-toc ol {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-left: 1px solid var(--border);
+}
+
+.cs-toc a {
+  display: flex;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  padding: 6px 12px;
+  margin-left: -1px;
+  border-left: 2px solid transparent;
+  text-decoration: none;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.cs-toc a:hover {
+  color: var(--text);
+  border-left-color: var(--accent);
+  text-decoration: none;
+}
+
+.cs-toc em {
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+  padding-top: 2px;
+}
+
+.cs-body {
+  min-width: 0;
+}
+
+.cs-section {
+  padding-bottom: 72px;
+  scroll-margin-top: 84px;
+}
+
+.cs-heading {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+}
+
+.cs-heading__index {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.cs-summary {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.cs-text {
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+/* 課題 */
+.cs-points {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.cs-points li {
+  position: relative;
+  padding-left: 22px;
+  color: var(--text-muted);
+}
+
+.cs-points li::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 0.7em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #db2777;
+}
+
+.cs-callout {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: rgba(var(--accent-rgb), 0.06);
+  border: 1px solid rgba(var(--accent-rgb), 0.25);
+  border-radius: 14px;
+  padding: 18px 20px;
+}
+
+.cs-callout .material-icons {
+  color: var(--accent);
+}
+
+.cs-callout p {
+  font-weight: 600;
+}
+
+/* きっかけ：縦のステップ */
+.cs-origin {
+  list-style: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding-left: 28px;
+}
+
+.cs-origin::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--primary), var(--accent));
+  border-radius: 2px;
+}
+
+.cs-origin li {
+  position: relative;
+}
+
+.cs-origin li::before {
+  content: '';
+  position: absolute;
+  left: -28px;
+  top: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bg-solid);
+  border: 3px solid var(--accent);
+}
+
+.cs-origin__step {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+
+.cs-origin strong {
+  display: block;
+  font-size: 1.02rem;
+  margin: 2px 0 4px;
+}
+
+.cs-origin p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+/* 仕組み：横のフロー */
+.cs-flow {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  counter-reset: flow;
+}
+
+.cs-flow__step {
+  position: relative;
+  background: var(--bg-solid);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ステップ間の矢印 */
+.cs-flow__step:not(:last-child)::after {
+  content: '→';
+  position: absolute;
+  right: -13px;
+  top: 38px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.cs-flow__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--grad);
+  color: #fff;
+  margin-bottom: 6px;
+  box-shadow: 0 8px 18px -8px rgba(var(--accent-rgb), 0.7);
+}
+
+.cs-flow__who {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+}
+
+.cs-flow__step strong {
+  font-size: 0.95rem;
+}
+
+.cs-flow__step p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* 役割 */
+.cs-roles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.cs-role__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.cs-role__head .material-icons {
+  color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.1);
+  border-radius: 10px;
+  padding: 6px;
+}
+
+.cs-role__head h3 {
+  font-size: 1rem;
+}
+
+.cs-role ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cs-role li {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  padding-left: 18px;
+  position: relative;
+}
+
+.cs-role li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.cs-tech {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.cs-tech__label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-right: 4px;
+}
+
+/* 工夫 */
+.cs-examples {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.cs-example {
+  border-left: 3px solid var(--accent);
+  background: var(--bg-solid);
+  border-radius: 0 12px 12px 0;
+  padding: 14px 16px;
+}
+
+.cs-example strong {
+  display: block;
+  font-size: 0.92rem;
+  margin-bottom: 4px;
+}
+
+.cs-example p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* 導入状況 */
+.cs-result {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--bg-solid);
+  overflow: hidden;
+}
+
+.cs-result__item {
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cs-result__item + .cs-result__item {
+  border-left: 1px solid var(--border);
+}
+
+.cs-result__value {
+  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+}
+
+/* 展望：市場 */
+.cs-market {
+  margin-bottom: 20px;
+}
+
+.cs-market__nums {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+.cs-market__nums > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cs-market__big {
+  font-family: var(--mono);
+  font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+.cs-market__big small {
+  font-family: 'Inter', 'Noto Sans JP', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-left: 4px;
+  color: var(--text-muted);
+}
+
+.cs-market__big--accent {
+  color: var(--accent);
+}
+
+.cs-market__cap {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.cs-market__bar {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--bg-card2);
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.cs-market__bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--grad);
+}
+
+.cs-market__calc {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.cs-market__calc .material-icons {
+  color: var(--primary);
+  font-size: 1.2rem;
+}
+
+.cs-market__calc strong {
+  color: var(--text);
+}
+
+.cs-reasons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.cs-reason__icon {
+  color: var(--primary);
+  background: rgba(var(--primary-rgb), 0.08);
+  border-radius: 10px;
+  padding: 6px;
+  margin-bottom: 10px;
+}
+
+.cs-reason h3 {
+  font-size: 0.98rem;
+  margin-bottom: 6px;
+}
+
+.cs-reason p {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.cs-back--bottom {
+  margin-left: -8px;
+}
+
+/* ── レスポンシブ ── */
+@media (max-width: 1000px) {
+  .cs-layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .cs-toc { display: none; }
+  .cs-flow { grid-template-columns: 1fr 1fr; }
+  .cs-flow__step:nth-child(2)::after { display: none; }
+  .cs-reasons { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .cs-hero { padding: 48px 0 40px; }
+  .cs-stats { grid-template-columns: 1fr 1fr; }
+  .cs-flow { grid-template-columns: 1fr; }
+  .cs-flow__step:not(:last-child)::after {
+    content: '↓';
+    right: auto;
+    left: 50%;
+    top: auto;
+    bottom: -13px;
+    transform: translateX(-50%);
+  }
+  .cs-flow__step:nth-child(2)::after { display: flex; }
+  .cs-roles,
+  .cs-examples { grid-template-columns: 1fr; }
+  .cs-result { grid-template-columns: 1fr 1fr; }
+  .cs-result__item:nth-child(3) { border-left: none; }
+  .cs-result__item:nth-child(n + 3) { border-top: 1px solid var(--border); }
+  .cs-market__nums { grid-template-columns: 1fr; }
+  .cs-section { padding-bottom: 56px; }
+}

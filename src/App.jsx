@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -8,9 +8,34 @@ import Timeline from './components/Timeline';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import SectionDots from './components/SectionDots';
+import CaseStudy from './components/CaseStudy';
+import { hiroliaCase } from './data/caseStudy';
+
+// ハッシュが #/works/... のときはケーススタディページを表示する
+const isCaseHash = () => window.location.hash === hiroliaCase.path;
 
 function App() {
   const progressRef = useRef(null);
+  const [isCase, setIsCase] = useState(isCaseHash);
+
+  useEffect(() => {
+    const onHash = () => setIsCase(isCaseHash());
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
+  // ページ切替時：ケーススタディは先頭から、ポートフォリオはハッシュの位置（例 #projects）へ
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    root.classList.toggle('no-snap', isCase);
+    root.style.scrollBehavior = 'auto';
+    if (isCase) {
+      window.scrollTo(0, 0);
+    } else {
+      document.getElementById(window.location.hash.slice(1))?.scrollIntoView();
+    }
+    root.style.scrollBehavior = '';
+  }, [isCase]);
 
   useEffect(() => {
     // スクロールで .reveal 要素をフェードイン
@@ -52,7 +77,7 @@ function App() {
       document.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('scroll', onScroll);
     };
-  }, []);
+  }, [isCase]);
 
   return (
     <>
@@ -62,16 +87,22 @@ function App() {
         <div className="bg-fx__orb bg-fx__orb--b" />
       </div>
       <div className="scroll-progress" ref={progressRef} />
-      <Navbar />
-      <SectionDots />
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Timeline />
-        <Contact />
-      </main>
+      {isCase ? (
+        <CaseStudy />
+      ) : (
+        <>
+          <Navbar />
+          <SectionDots />
+          <main>
+            <Hero />
+            <About />
+            <Skills />
+            <Projects />
+            <Timeline />
+            <Contact />
+          </main>
+        </>
+      )}
       <Footer />
     </>
   );
