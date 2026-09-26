@@ -365,6 +365,23 @@
   to { top: 100%; }
 }
 
+/* ── パソコン：画面の高さに合わせてカバーを伸縮し、スクロール誘導を下端に固定 ── */
+@media (min-width: 1024px) and (min-height: 640px) and (hover: hover) and (pointer: fine) {
+  main > .hero {
+    justify-content: flex-start;
+    padding-bottom: 28px;
+  }
+
+  .hero-cover {
+    height: clamp(240px, 40vh, 480px);
+  }
+
+  .hero-scroll {
+    margin-top: auto;
+    padding-top: 24px;
+  }
+}
+
 /* ── モバイル ── */
 @media (max-width: 640px) {
   .hero-profile {

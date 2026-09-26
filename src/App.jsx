@@ -7,6 +7,7 @@ import Projects from './components/Projects';
 import Timeline from './components/Timeline';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import SectionDots from './components/SectionDots';
 
 function App() {
   const progressRef = useRef(null);
@@ -62,6 +63,7 @@ function App() {
       </div>
       <div className="scroll-progress" ref={progressRef} />
       <Navbar />
+      <SectionDots />
       <main>
         <Hero />
         <About />

@@ -220,6 +220,33 @@ section {
   transform: none;
 }
 
+/* ── パソコン：1セクション = 1画面、スクロールで次のセクションに吸着 ──
+   画面より長いセクション（About / Projects など）は中を読み切ってから次へ進む */
+@media (min-width: 1024px) and (min-height: 640px) and (hover: hover) and (pointer: fine) {
+  html {
+    scroll-snap-type: y mandatory;
+  }
+
+  main > section {
+    min-height: 100vh;
+    min-height: 100svh;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* flex 内だと margin: auto のコンテナが中身の幅に縮むので、幅を明示する */
+  main > section > .container {
+    width: 100%;
+  }
+
+  /* 最後のセクションの下にあるフッターにも到達できるようにする */
+  .footer {
+    scroll-snap-align: end;
+  }
+}
+
 @media (max-width: 768px) {
   section {
     padding: 64px 0;

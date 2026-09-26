@@ -1,0 +1,70 @@
+.section-dots {
+  position: fixed;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.section-dot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.section-dot:hover { text-decoration: none; }
+
+.section-dot__mark {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-strong);
+  background: var(--bg-solid);
+  transition: transform 0.25s, background 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+
+.section-dot__label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  background: var(--bg-solid);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2px 8px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+}
+
+.section-dot__label em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.section-dot:hover .section-dot__label {
+  opacity: 1;
+  transform: none;
+}
+
+.section-dot:hover .section-dot__mark {
+  border-color: var(--accent);
+}
+
+.section-dot.is-current .section-dot__mark {
+  transform: scale(1.35);
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.15);
+}
+
+/* ドットナビは全画面セクションが有効なパソコン表示のときだけ出す */
+@media not all and (min-width: 1024px) and (min-height: 640px) and (hover: hover) and (pointer: fine) {
+  .section-dots { display: none; }
+}
