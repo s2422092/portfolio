@@ -7,11 +7,11 @@ import {
 import './Skills.css';
 
 const categories = [
-  { key: 'front', label: 'フロントエンド', icon: 'web' },
-  { key: 'back', label: 'バックエンド', icon: 'dns' },
-  { key: 'db', label: 'データベース', icon: 'storage' },
-  { key: 'api', label: 'API / 外部サービス', icon: 'electrical_services' },
-  { key: 'tool', label: 'ツール', icon: 'build' },
+  { key: 'front', label: 'フロントエンド', icon: 'web', color: '#4f46e5' },
+  { key: 'back', label: 'バックエンド', icon: 'dns', color: '#059669' },
+  { key: 'db', label: 'データベース', icon: 'storage', color: '#d97706' },
+  { key: 'api', label: 'API / 外部サービス', icon: 'electrical_services', color: '#db2777' },
+  { key: 'tool', label: 'ツール', icon: 'build', color: '#0891b2' },
 ];
 
 // simple-icons に無いブランドは mono（頭文字）+ ブランドカラーで表示
@@ -103,10 +103,11 @@ export default function Skills() {
               key={c.key}
               role="tab"
               aria-selected={active === c.key}
-              className={`skill-filter ${active === c.key ? 'is-active' : ''}`}
+              className={`skill-filter skill-filter--cat ${active === c.key ? 'is-active' : ''}`}
+              style={{ '--cat': c.color }}
               onClick={() => setActive(active === c.key ? 'all' : c.key)}
             >
-              <span className="material-icons skill-filter__icon" aria-hidden="true">{c.icon}</span>
+              <span className="skill-filter__dot" aria-hidden="true" />
               {c.label}
               <span className="skill-filter__count">{count(c.key)}</span>
             </button>
@@ -119,33 +120,51 @@ export default function Skills() {
           onPointerMove={onPointerMove}
           onPointerLeave={onPointerLeave}
         >
-          <ul className="skill-orbs">
-            {skills.map((s, i) => {
-              const depth = (i * 7) % 3; // 0: 奥, 1: 中, 2: 手前
-              const dim = active !== 'all' && s.cat !== active;
+          <div className="skill-zones">
+            {categories.map((c) => {
+              const items = skills.filter((sk) => sk.cat === c.key);
+              const dim = active !== 'all' && active !== c.key;
               return (
-                <li
-                  key={s.name}
-                  className={`orb-cell ${dim ? 'is-dim' : ''} ${active === s.cat ? 'is-hit' : ''}`}
-                  style={{
-                    '--ox': `${jitter(i, 37, 5, 14)}px`,
-                    '--oy': `${jitter(i, 53, 11, 16)}px`,
-                    '--depth': depth,
-                    '--float-dur': `${5 + (i % 4) * 0.9}s`,
-                    '--float-delay': `${-(i * 0.7)}s`,
-                    '--brand': s.icon ? `#${s.icon.hex}` : s.color,
-                  }}
+                <div
+                  key={c.key}
+                  className={`skill-zone skill-zone--${c.key} ${dim ? 'is-dim' : ''} ${active === c.key ? 'is-hit' : ''}`}
+                  style={{ '--cat': c.color }}
                 >
-                  <div className="orb">
-                    <div className="orb__tile">
-                      <SkillIcon skill={s} />
-                    </div>
-                    <span className="orb__name">{s.name}</span>
+                  <div className="skill-zone__head">
+                    <span className="material-icons skill-zone__icon" aria-hidden="true">{c.icon}</span>
+                    <span className="skill-zone__label">{c.label}</span>
+                    <span className="skill-zone__count">{items.length}</span>
                   </div>
-                </li>
+                  <ul className="skill-orbs">
+                    {items.map((sk) => {
+                      const i = skills.indexOf(sk);
+                      return (
+                        <li
+                          key={sk.name}
+                          className="orb-cell"
+                          style={{
+                            '--ox': `${jitter(i, 37, 5, 6)}px`,
+                            '--oy': `${jitter(i, 53, 11, 8)}px`,
+                            '--depth': (i * 7) % 3, // 0: 奥, 1: 中, 2: 手前
+                            '--float-dur': `${5 + (i % 4) * 0.9}s`,
+                            '--float-delay': `${-(i * 0.7)}s`,
+                            '--brand': sk.icon ? `#${sk.icon.hex}` : sk.color,
+                          }}
+                        >
+                          <div className="orb">
+                            <div className="orb__tile">
+                              <SkillIcon skill={sk} />
+                            </div>
+                            <span className="orb__name">{sk.name}</span>
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
               );
             })}
-          </ul>
+          </div>
         </div>
       </div>
     </section>

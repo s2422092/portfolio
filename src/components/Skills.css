@@ -45,8 +45,20 @@
   box-shadow: 0 6px 18px -8px rgba(var(--accent-rgb), 0.7);
 }
 
-.skill-filter__icon {
-  font-size: 1rem;
+.skill-filter__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cat);
+}
+
+.skill-filter--cat.is-active {
+  background: var(--cat);
+  box-shadow: 0 6px 18px -8px var(--cat);
+}
+
+.skill-filter--cat.is-active .skill-filter__dot {
+  background: #fff;
 }
 
 .skill-filter__count {
@@ -66,7 +78,7 @@
     radial-gradient(ellipse 60% 70% at 50% 45%, rgba(var(--accent-rgb), 0.07), transparent 70%),
     radial-gradient(circle, rgba(15, 23, 42, 0.12) 1px, transparent 1.5px) 0 0 / 22px 22px,
     var(--bg-solid);
-  padding: 48px 32px 40px;
+  padding: 28px;
   overflow: hidden;
   box-shadow: inset 0 0 60px rgba(var(--primary-rgb), 0.05);
 }
@@ -81,35 +93,96 @@
   box-shadow: inset 0 0 40px 10px var(--bg-solid);
 }
 
-.skill-orbs {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 34px 12px;
+.skill-zones {
   position: relative;
   z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas:
+    'front front api  api'
+    'back  db    tool tool';
+  gap: 16px;
+}
+
+.skill-zone--front { grid-area: front; }
+.skill-zone--back  { grid-area: back; }
+.skill-zone--db    { grid-area: db; }
+.skill-zone--api   { grid-area: api; }
+.skill-zone--tool  { grid-area: tool; }
+
+/* カテゴリごとのエリア */
+.skill-zone {
+  border-radius: 18px;
+  border: 1px dashed color-mix(in srgb, var(--cat) 35%, transparent);
+  background: color-mix(in srgb, var(--cat) 4%, rgba(255, 255, 255, 0.6));
+  padding: 14px 16px 18px;
+  transition: opacity 0.35s, filter 0.35s, border-color 0.35s, box-shadow 0.35s, background 0.35s;
+}
+
+.skill-zone.is-dim {
+  opacity: 0.25;
+  filter: grayscale(1);
+}
+
+.skill-zone.is-hit {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--cat) 60%, transparent);
+  background: color-mix(in srgb, var(--cat) 7%, #fff);
+  box-shadow: 0 18px 40px -22px var(--cat);
+}
+
+.skill-zone__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.skill-zone__icon {
+  font-size: 1rem;
+  color: #fff;
+  background: var(--cat);
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill-zone__label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--cat);
+}
+
+.skill-zone__count {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.skill-orbs {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 22px 14px;
 }
 
 /* セル：ばらつき + マウス追従（奥行きが深いほど大きく動く） */
 .orb-cell {
   display: flex;
   justify-content: center;
+  width: 84px;
   transform:
     translate(
-      calc(var(--ox) + var(--px) * (var(--depth) + 1) * 9px),
-      calc(var(--oy) + var(--py) * (var(--depth) + 1) * 9px)
+      calc(var(--ox) + var(--px) * (var(--depth) + 1) * 7px),
+      calc(var(--oy) + var(--py) * (var(--depth) + 1) * 7px)
     )
-    scale(calc(0.9 + var(--depth) * 0.08));
-  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.35s, filter 0.35s;
-}
-
-.orb-cell.is-dim {
-  opacity: 0.18;
-  filter: grayscale(1) blur(1px);
-}
-
-.orb-cell.is-hit {
-  z-index: 2;
+    scale(calc(0.92 + var(--depth) * 0.06));
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 /* ふわふわ浮遊 */
@@ -166,7 +239,7 @@
 }
 
 .orb:hover .orb__tile,
-.orb-cell.is-hit .orb__tile {
+.skill-zone.is-hit .orb__tile {
   transform: translateY(-4px) scale(1.08);
   box-shadow:
     0 16px 32px -10px color-mix(in srgb, var(--brand) 70%, transparent),
@@ -174,20 +247,31 @@
 }
 
 .orb:hover .orb__name,
-.orb-cell.is-hit .orb__name {
+.skill-zone.is-hit .orb__name {
   color: var(--text);
 }
 
 @media (max-width: 900px) {
-  .skill-orbs { grid-template-columns: repeat(5, 1fr); }
+  .skill-zones {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'front front'
+      'api   api'
+      'back  db'
+      'tool  tool';
+  }
 }
 
 @media (max-width: 560px) {
-  .skill-stage { padding: 32px 12px 28px; border-radius: 18px; }
-  .skill-orbs { grid-template-columns: repeat(4, 1fr); gap: 26px 4px; }
+  .skill-stage { padding: 12px; border-radius: 18px; }
+  .skill-zones { gap: 10px; }
+  .skill-zone { padding: 12px 10px 14px; }
+  .skill-zone__label { font-size: 0.78rem; }
+  .skill-orbs { gap: 16px 4px; }
   .orb-cell {
+    width: 72px;
     /* スマホではばらつきを控えめにして重なりを防ぐ */
-    transform: translate(calc(var(--ox) * 0.3), calc(var(--oy) * 0.4)) scale(calc(0.9 + var(--depth) * 0.05));
+    transform: translate(calc(var(--ox) * 0.3), calc(var(--oy) * 0.4)) scale(calc(0.92 + var(--depth) * 0.04));
   }
   .orb__tile { width: 52px; height: 52px; border-radius: 14px; }
   .orb__svg { width: 24px; height: 24px; }
