@@ -35,7 +35,7 @@ export const hiroliaCase = {
     { who: 'お客様', icon: 'qr_code_scanner', title: 'QRコードを読み取る', text: 'テーブルのQRコードをスマホで読み取るだけ。アプリのインストールは不要。' },
     { who: 'お客様', icon: 'translate', title: '好きな言語で注文', text: '日本語・英語・ネパール語から選んで、メニューを見ながら注文。' },
     { who: 'スタッフ', icon: 'notifications_active', title: 'リアルタイムで受注', text: 'スタッフ画面に注文がすぐ届き、調理状況もその場で管理できる。' },
-    { who: '厨房', icon: 'print', title: '伝票を自動印刷', text: 'USBレシートプリンターから注文伝票が自動で印刷される。' },
+    { who: '厨房', icon: 'print', title: '伝票を自動印刷', text: 'レシートプリンターから注文伝票が自動で印刷される。' },
   ],
 
   roles: [
